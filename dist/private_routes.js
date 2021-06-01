@@ -1,16 +1,4 @@
 "use strict";
-/**
- * Pivate Routes are those API urls that require the user to be
- * logged in before they can be called from the front end.
- *
- * Basically all HTTP requests to these endpoints must have an
- * Authorization header with the value "Bearer <token>"
- * being "<token>" a JWT token generated for the user using
- * the POST /token endpoint
- *
- * Please include in this file all your private URL endpoints.
- *
- */
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
@@ -30,11 +18,32 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 exports.__esModule = true;
 var express_1 = require("express");
 var utils_1 = require("./utils");
 var actions = __importStar(require("./actions"));
-// declare a new router to include all the endpoints
+var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 var router = express_1.Router();
-router.get('/user', utils_1.safe(actions.getUsers));
+/* TOKEN */
+//MIDDLEWARE de verificación
+var verifyToken = function (req, res, next) {
+    //headers con el token
+    var token = req.header('Authorization');
+    if (!token)
+        return res.status(400).json('ACCESS DENIED');
+    try {
+        var decoded = jsonwebtoken_1["default"].verify(token, process.env.JWT_KEY);
+        /* asignamos a req.user para aceder al usuario */
+        req.user = decoded;
+        next();
+    }
+    catch (error) {
+        /* si surge un error hacemos esto: */
+        return res.status(400).json('ACCESS DENIED');
+    }
+};
+router.get('/user', verifyToken, utils_1.safe(actions.getUser));
 exports["default"] = router;
