@@ -45,5 +45,8 @@ var verifyToken = function (req, res, next) {
         return res.status(400).json('ACCESS DENIED');
     }
 };
+// get usuario actual
 router.get('/user', verifyToken, utils_1.safe(actions.getUser));
+//post de categoria
+router.post('/categoria', verifyToken, utils_1.safe(actions.postCategoria));
 exports["default"] = router;

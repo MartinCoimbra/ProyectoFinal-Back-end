@@ -4,16 +4,13 @@ import {
 } from 'typeorm';
 import { Preguntado } from "./Preguntado"
 
-
 @Entity()
 export class Categoria extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column({ unique: true })
-    nombre: string;
-
-
+    @Column()
+    name: string;
 
     @OneToMany(() => Preguntado, preguntado => preguntado.categoria)
     preguntado: Preguntado;

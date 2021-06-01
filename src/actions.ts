@@ -3,6 +3,8 @@ import { getRepository, ObjectLiteral  } from 'typeorm'
 import { Usuario } from './entities/Usuario'
 import { Exception } from './utils'
 import jwt from 'jsonwebtoken'
+import { Categoria } from './entities/Categoria'
+import { width, height } from 'styled-system'
 
 /* POST user */
 export const createUser = async (req: Request, res: Response): Promise<Response> => {
@@ -22,11 +24,9 @@ export const createUser = async (req: Request, res: Response): Promise<Response>
 /* GET user */
 export const getUser = async (req: Request, res: Response): Promise<Response> => {
     const userID = (req.user as ObjectLiteral).user.id 
-    
     const user = await getRepository(Usuario).findOne(userID);
     return res.json(user);
 }
-
 /* POST user (login) */
 export const login = async (req: Request, res: Response): Promise<Response> =>{
 	if(!req.body.email) throw new Exception("Verifique el email", 400)
@@ -37,5 +37,21 @@ export const login = async (req: Request, res: Response): Promise<Response> =>{
 	const token = jwt.sign({ user }, process.env.JWT_KEY as string, { expiresIn: 60 * 60 });// Generamos el Token!!!
 	return res.json({ user, token });// Devolvera el usuario y el token creado recientemente al cliente
 }
-
-
+// POST(Publicar o enviar) categoria
+export const postCategoria = async (req: Request, res: Response): Promise<Response> => {
+    if(!req.body.name) throw new Exception("Ingrese nombre de la categoria ( name )")
+    
+    const hayCat = await getRepository(Categoria).findOne({where: {name: req.body.name}});
+	if(hayCat) throw new Exception("Ya hay una categoria con ese nombre", 401)
+    
+    const categoriaresp = getRepository(Categoria).create(req.body);
+    console.log(categoriaresp)
+    
+    const results = await getRepository(Categoria).save(categoriaresp);
+    return res.json(results);
+}
+// GET(Leer) todas las categorias
+export const getCategorias = async (req: Request, res: Response): Promise<Response> =>{
+    const categorias = await getRepository(Categoria).find();
+    return res.json(categorias);
+}

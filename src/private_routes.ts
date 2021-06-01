@@ -20,8 +20,10 @@ const verifyToken= (req: Request,res:Response, next:NextFunction) =>{
     }
   
 }
-
+// get usuario actual
 router.get('/user',verifyToken, safe(actions.getUser));
 
+//post de categoria
+router.post('/categoria', verifyToken, safe(actions.postCategoria));
 
 export default router;
