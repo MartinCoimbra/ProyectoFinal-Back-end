@@ -23,8 +23,12 @@ var express_1 = require("express");
 var utils_1 = require("./utils");
 var actions = __importStar(require("./actions"));
 var router = express_1.Router();
-//registro 
+// POST registro 
 router.post('/user', utils_1.safe(actions.createUser));
-//login
+//POST categorias
 router.post('/login', utils_1.safe(actions.login));
+//GET todas categorias
+router.get('/categorias', utils_1.safe(actions.getCategorias));
+//GET una categoria
+/* router.get('/categoria/:id', safe(actions.getCategoria)); */
 exports["default"] = router;

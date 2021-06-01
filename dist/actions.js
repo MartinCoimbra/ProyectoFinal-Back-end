@@ -39,11 +39,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 exports.__esModule = true;
-exports.login = exports.getUser = exports.createUser = void 0;
+exports.getCategorias = exports.postCategoria = exports.login = exports.getUser = exports.createUser = void 0;
 var typeorm_1 = require("typeorm");
 var Usuario_1 = require("./entities/Usuario");
 var utils_1 = require("./utils");
 var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+var Categoria_1 = require("./entities/Categoria");
 /* POST user */
 var createUser = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var user, newUser, results;
@@ -110,3 +111,39 @@ var login = function (req, res) { return __awaiter(void 0, void 0, void 0, funct
     });
 }); };
 exports.login = login;
+// POST(Publicar o enviar) categoria
+var postCategoria = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var hayCat, categoriaresp, results;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                if (!req.body.name)
+                    throw new utils_1.Exception("Ingrese nombre de la categoria ( name )");
+                return [4 /*yield*/, typeorm_1.getRepository(Categoria_1.Categoria).findOne({ where: { name: req.body.name } })];
+            case 1:
+                hayCat = _a.sent();
+                if (hayCat)
+                    throw new utils_1.Exception("Ya hay una categoria con ese nombre", 401);
+                categoriaresp = typeorm_1.getRepository(Categoria_1.Categoria).create(req.body);
+                console.log(categoriaresp);
+                return [4 /*yield*/, typeorm_1.getRepository(Categoria_1.Categoria).save(categoriaresp)];
+            case 2:
+                results = _a.sent();
+                return [2 /*return*/, res.json(results)];
+        }
+    });
+}); };
+exports.postCategoria = postCategoria;
+// GET(Leer) todas las categorias
+var getCategorias = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var categorias;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, typeorm_1.getRepository(Categoria_1.Categoria).find()];
+            case 1:
+                categorias = _a.sent();
+                return [2 /*return*/, res.json(categorias)];
+        }
+    });
+}); };
+exports.getCategorias = getCategorias;

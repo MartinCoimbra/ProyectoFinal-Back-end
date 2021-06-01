@@ -37,9 +37,9 @@ var Categoria = /** @class */ (function (_super) {
         __metadata("design:type", Number)
     ], Categoria.prototype, "id");
     __decorate([
-        typeorm_1.Column({ unique: true }),
+        typeorm_1.Column(),
         __metadata("design:type", String)
-    ], Categoria.prototype, "nombre");
+    ], Categoria.prototype, "name");
     __decorate([
         typeorm_1.OneToMany(function () { return Preguntado_1.Preguntado; }, function (preguntado) { return preguntado.categoria; }),
         __metadata("design:type", Preguntado_1.Preguntado)
