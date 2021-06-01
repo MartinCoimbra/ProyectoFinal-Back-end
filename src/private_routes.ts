@@ -1,23 +1,27 @@
-/**
- * Pivate Routes are those API urls that require the user to be
- * logged in before they can be called from the front end.
- * 
- * Basically all HTTP requests to these endpoints must have an
- * Authorization header with the value "Bearer <token>"
- * being "<token>" a JWT token generated for the user using 
- * the POST /token endpoint
- * 
- * Please include in this file all your private URL endpoints.
- * 
- */
-
-import { Router } from 'express';
+import { Router, Request, Response, NextFunction  } from 'express';
 import { safe } from './utils';
 import * as actions from './actions';
-
-// declare a new router to include all the endpoints
+import jwt from 'jsonwebtoken'
 const router = Router();
+/* TOKEN */
+//MIDDLEWARE de verificación
+const verifyToken= (req: Request,res:Response, next:NextFunction) =>{
+    //headers con el token
+     const token = req.header('Authorization');
+    if(!token) return res.status(400).json('ACCESS DENIED');
+    try {
+        const decoded = jwt.verify(token as string, process.env.JWT_KEY as string)
+        /* asignamos a req.user para aceder al usuario */
+        req.user = decoded;
+        next()      
+    } catch (error) {
+        /* si surge un error hacemos esto: */
+        return res.status(400).json('ACCESS DENIED'); 
+    }
+  
+}
 
-router.get('/user', safe(actions.getUsers));
+router.get('/user',verifyToken, safe(actions.getUser));
+
 
 export default router;

@@ -12,6 +12,9 @@ export class Usuario extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
+    @Column({ unique: true })
+    username: string;
+ 
     @Column()
     first_name: string;
 
@@ -24,9 +27,8 @@ export class Usuario extends BaseEntity {
     @Column()
     password: string;
 
-    @Column()
+    @Column({default:0})
     puntos: number;
-
 
     @OneToOne(() => Coins, coins => coins.usuario)
     coins: Coins;
