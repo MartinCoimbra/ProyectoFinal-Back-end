@@ -6,8 +6,6 @@ import { Comentario } from "./Comentario"
 import { Categoria } from "./Categoria"
 import { Preguntas } from './Preguntas';
 
-
-
 @Entity()
 export class Preguntado extends BaseEntity {
     @PrimaryGeneratedColumn()
@@ -19,7 +17,7 @@ export class Preguntado extends BaseEntity {
     @Column()
     descripcion: string;
 
-    @Column()
+    @Column({default: 0})
     calificacion: number;
 
     @Column()

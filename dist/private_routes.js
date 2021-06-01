@@ -49,4 +49,7 @@ var verifyToken = function (req, res, next) {
 router.get('/user', verifyToken, utils_1.safe(actions.getUser));
 //post de categoria
 router.post('/categoria', verifyToken, utils_1.safe(actions.postCategoria));
+/* PREGUNTADOS - TEMATICAS */
+/* POST privado */
+router.post('/preguntado', verifyToken, utils_1.safe(actions.postPreguntado));
 exports["default"] = router;
