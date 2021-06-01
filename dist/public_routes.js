@@ -30,5 +30,8 @@ router.post('/login', utils_1.safe(actions.login));
 //GET todas categorias
 router.get('/categorias', utils_1.safe(actions.getCategorias));
 //GET una categoria
-/* router.get('/categoria/:id', safe(actions.getCategoria)); */
+router.get('/categoria/:id', utils_1.safe(actions.getCategoria));
+// Preguntados
+router.get('/preguntados', utils_1.safe(actions.getPreguntados));
+//router.get('/preguntado/:id', safe(actions.getPreguntado));
 exports["default"] = router;

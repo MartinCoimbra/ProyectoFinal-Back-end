@@ -39,12 +39,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 exports.__esModule = true;
-exports.getCategorias = exports.postCategoria = exports.login = exports.getUser = exports.createUser = void 0;
+exports.postPreguntado = exports.getPreguntados = exports.getCategoria = exports.getCategorias = exports.postCategoria = exports.login = exports.getUser = exports.createUser = void 0;
 var typeorm_1 = require("typeorm");
 var Usuario_1 = require("./entities/Usuario");
 var utils_1 = require("./utils");
 var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 var Categoria_1 = require("./entities/Categoria");
+var Preguntado_1 = require("./entities/Preguntado");
 /* POST user */
 var createUser = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var user, newUser, results;
@@ -147,3 +148,56 @@ var getCategorias = function (req, res) { return __awaiter(void 0, void 0, void 
     });
 }); };
 exports.getCategorias = getCategorias;
+// GET(Leer) 1 categoria
+var getCategoria = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var categoria;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, typeorm_1.getRepository(Categoria_1.Categoria).findOne(req.params.id)];
+            case 1:
+                categoria = _a.sent();
+                return [2 /*return*/, res.json(categoria)];
+        }
+    });
+}); };
+exports.getCategoria = getCategoria;
+// GET(Leer) Todos los preguntados(tematicas)
+var getPreguntados = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var preguntados;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, typeorm_1.getRepository(Preguntado_1.Preguntado).find()];
+            case 1:
+                preguntados = _a.sent();
+                return [2 /*return*/, res.json(preguntados)];
+        }
+    });
+}); };
+exports.getPreguntados = getPreguntados;
+// POST de 1 preguntado (tematica) 
+var postPreguntado = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var hayPreguntado, preguntado, results;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                /* Verificamos los datos de la tabla preguntado */
+                if (!req.body.nombre)
+                    throw new utils_1.Exception("Ingrese nombre del preguntado ( nombre )");
+                if (!req.body.descripcion)
+                    throw new utils_1.Exception("Ingrese una descripcion del preguntado ( descripcion )");
+                if (!req.body.url_foto)
+                    throw new utils_1.Exception("Ingrese una url del preguntado ( url_foto )");
+                return [4 /*yield*/, typeorm_1.getRepository(Preguntado_1.Preguntado).findOne({ where: { name: req.body.nombre } })];
+            case 1:
+                hayPreguntado = _a.sent();
+                if (hayPreguntado)
+                    throw new utils_1.Exception("Ya hay una tematica con ese nombre");
+                preguntado = typeorm_1.getRepository(Preguntado_1.Preguntado).create(req.body);
+                return [4 /*yield*/, typeorm_1.getRepository(Preguntado_1.Preguntado).save(preguntado)];
+            case 2:
+                results = _a.sent();
+                return [2 /*return*/, res.json(results)];
+        }
+    });
+}); };
+exports.postPreguntado = postPreguntado;

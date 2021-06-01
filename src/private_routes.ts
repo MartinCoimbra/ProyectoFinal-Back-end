@@ -26,4 +26,9 @@ router.get('/user',verifyToken, safe(actions.getUser));
 //post de categoria
 router.post('/categoria', verifyToken, safe(actions.postCategoria));
 
+/* PREGUNTADOS - TEMATICAS */
+/* POST privado */
+router.post('/preguntado', verifyToken, safe(actions.postPreguntado));
+
+
 export default router;

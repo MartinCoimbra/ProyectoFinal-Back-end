@@ -47,7 +47,7 @@ var Preguntado = /** @class */ (function (_super) {
         __metadata("design:type", String)
     ], Preguntado.prototype, "descripcion");
     __decorate([
-        typeorm_1.Column(),
+        typeorm_1.Column({ "default": 0 }),
         __metadata("design:type", Number)
     ], Preguntado.prototype, "calificacion");
     __decorate([

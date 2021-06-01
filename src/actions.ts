@@ -5,6 +5,7 @@ import { Exception } from './utils'
 import jwt from 'jsonwebtoken'
 import { Categoria } from './entities/Categoria'
 import { width, height } from 'styled-system'
+import { Preguntado } from './entities/Preguntado'
 
 /* POST user */
 export const createUser = async (req: Request, res: Response): Promise<Response> => {
@@ -54,4 +55,32 @@ export const postCategoria = async (req: Request, res: Response): Promise<Respon
 export const getCategorias = async (req: Request, res: Response): Promise<Response> =>{
     const categorias = await getRepository(Categoria).find();
     return res.json(categorias);
+}
+// GET(Leer) 1 categoria
+export const getCategoria = async (req: Request, res: Response): Promise<Response> =>{
+    const categoria = await getRepository(Categoria).findOne(req.params.id);
+    return res.json(categoria);
+}
+// GET(Leer) Todos los preguntados(tematicas)
+export const getPreguntados = async (req: Request, res: Response): Promise<Response> =>{
+    const preguntados = await getRepository(Preguntado).find();
+    return res.json(preguntados);
+}
+// POST de 1 preguntado (tematica) 
+export const postPreguntado = async (req: Request, res: Response): Promise<Response> => {
+    /* Verificamos los datos de la tabla preguntado */
+    if(!req.body.nombre) throw new Exception("Ingrese nombre del preguntado ( nombre )")
+    if(!req.body.descripcion) throw new Exception("Ingrese una descripcion del preguntado ( descripcion )")
+    if(!req.body.url_foto) throw new Exception("Ingrese una url del preguntado ( url_foto )")
+    
+    /*⛔⛔⛔ Falta hacer las otras tablas dentro de esta ⛔⛔⛔*/
+    
+    /* Si hay una preguntado(tematica) con ese nombre no la vamos a postear para no repetir */
+    const hayPreguntado = await getRepository(Preguntado).findOne({where: {name: req.body.nombre}});
+	if(hayPreguntado) throw new Exception("Ya hay una tematica con ese nombre")
+    
+    const preguntado = getRepository(Preguntado).create(req.body);
+
+    const results = await getRepository(Preguntado).save(preguntado);
+    return res.json(results);
 }
