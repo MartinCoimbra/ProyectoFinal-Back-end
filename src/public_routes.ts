@@ -12,7 +12,11 @@ router.get('/categorias', safe(actions.getCategorias));
 router.get('/categoria/:id', safe(actions.getCategoria));
 // Preguntados
 router.get('/preguntados', safe(actions.getPreguntados));
-//router.get('/preguntado/:id', safe(actions.getPreguntado));
+// Preguntado
+router.get('/preguntado/:id', safe(actions.getPreguntado));
 
+// Metodo get para ver un preguntado en especifico//
+
+// Metodo get para ver preguntado de un metodo especifico//
 
 export default router;

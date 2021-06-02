@@ -52,4 +52,7 @@ router.post('/categoria', verifyToken, utils_1.safe(actions.postCategoria));
 /* PREGUNTADOS - TEMATICAS */
 /* POST privado */
 router.post('/preguntado', verifyToken, utils_1.safe(actions.postPreguntado));
+// Metodo Get a las Preguntas de un preguntado en especifico //
+// Nota poner metodo GET para preguntas en especifica //
+// Metodo Get para las respuestas especificas //
 exports["default"] = router;

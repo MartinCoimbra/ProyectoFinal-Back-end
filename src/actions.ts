@@ -89,7 +89,7 @@ export const postPreguntado = async (req: Request, res: Response): Promise<Respo
 
 
     console.log(results.id)
-   
+
     /* ******************************************************************* */
     /* PRIMERA PREGUNTA Y SUS RESPUESTAS */
 
@@ -97,9 +97,9 @@ export const postPreguntado = async (req: Request, res: Response): Promise<Respo
     if (!req.body.pregunta) throw new Exception("Ingrese una pregunta ( pregunta )")
     if (!req.body.url_foto_pregunta) throw new Exception("Ingrese la url_foto_pregunta ( url_foto_pregunta )")
     let pregunta = new Preguntas()
-    pregunta.preguntas = req.body.pregunta    
+    pregunta.preguntas = req.body.pregunta
     pregunta.foto_pregunta = req.body.url_foto_pregunta
-    pregunta.id = results.id    
+    pregunta.id = results.id
     const preg = getRepository(Preguntas).create(pregunta);
     const results2 = await getRepository(Preguntas).save(preg);
     console.log(results2.id)
@@ -119,13 +119,13 @@ export const postPreguntado = async (req: Request, res: Response): Promise<Respo
     if (!req.body.pregunta2) throw new Exception("Ingrese una pregunta ( pregunta2 )")
     if (!req.body.url_foto_pregunta2) throw new Exception("Ingrese la url_foto_pregunta ( url_foto_pregunta2 )")
     let pregunta2 = new Preguntas()
-    pregunta2.preguntas = req.body.pregunta2    
+    pregunta2.preguntas = req.body.pregunta2
     pregunta2.foto_pregunta = req.body.url_foto_pregunta2
-    pregunta2.id = results.id    
+    pregunta2.id = results.id
     const preg2 = getRepository(Preguntas).create(pregunta2);
     const results02 = await getRepository(Preguntas).save(preg2);
 
-     //Posteamos las 3 respuestas de la pregunta//
+    //Posteamos las 3 respuestas de la pregunta//
     if (!req.body.opcion_correcta2) throw new Exception("Ingrese la respuesta correcta ( opcion_correcta2 )")
     if (!req.body.opcion_b2) throw new Exception("Ingrese una respuesta incorrecta ( opcion_b2 )")
     if (!req.body.opcion_c2) throw new Exception("Ingrese otra respuesta incorrecta ( opcion_c2 )")
@@ -140,13 +140,13 @@ export const postPreguntado = async (req: Request, res: Response): Promise<Respo
     if (!req.body.pregunta3) throw new Exception("Ingrese una pregunta ( pregunta3 )")
     if (!req.body.url_foto_pregunta3) throw new Exception("Ingrese la url_foto_pregunta ( url_foto_pregunta3 )")
     let pregunta3 = new Preguntas()
-    pregunta3.preguntas = req.body.pregunta3    
+    pregunta3.preguntas = req.body.pregunta3
     pregunta3.foto_pregunta = req.body.url_foto_pregunta3
-    pregunta3.id = results.id    
+    pregunta3.id = results.id
     const preg3 = getRepository(Preguntas).create(pregunta3);
     const results04 = await getRepository(Preguntas).save(preg3);
 
-     //Posteamos las 3 respuestas de la pregunta//
+    //Posteamos las 3 respuestas de la pregunta//
     if (!req.body.opcion_correcta3) throw new Exception("Ingrese la respuesta correcta ( opcion_correcta3 )")
     if (!req.body.opcion_b3) throw new Exception("Ingrese una respuesta incorrecta ( opcion_b3 )")
     if (!req.body.opcion_c3) throw new Exception("Ingrese otra respuesta incorrecta ( opcion_c3 )")
@@ -161,13 +161,13 @@ export const postPreguntado = async (req: Request, res: Response): Promise<Respo
     if (!req.body.pregunta4) throw new Exception("Ingrese una pregunta ( pregunta4 )")
     if (!req.body.url_foto_pregunta4) throw new Exception("Ingrese la url_foto_pregunta ( url_foto_pregunta4 )")
     let pregunta4 = new Preguntas()
-    pregunta4.preguntas = req.body.pregunta4    
+    pregunta4.preguntas = req.body.pregunta4
     pregunta4.foto_pregunta = req.body.url_foto_pregunta4
-    pregunta4.id = results.id    
+    pregunta4.id = results.id
     const preg4 = getRepository(Preguntas).create(pregunta4);
     const results06 = await getRepository(Preguntas).save(preg4);
 
-     //Posteamos las 3 respuestas de la pregunta//
+    //Posteamos las 3 respuestas de la pregunta//
     if (!req.body.opcion_correcta4) throw new Exception("Ingrese la respuesta correcta ( opcion_correcta4 )")
     if (!req.body.opcion_b4) throw new Exception("Ingrese una respuesta incorrecta ( opcion_b4 )")
     if (!req.body.opcion_c4) throw new Exception("Ingrese otra respuesta incorrecta ( opcion_c4 )")
@@ -182,13 +182,13 @@ export const postPreguntado = async (req: Request, res: Response): Promise<Respo
     if (!req.body.pregunta5) throw new Exception("Ingrese una pregunta ( pregunta5 )")
     if (!req.body.url_foto_pregunta5) throw new Exception("Ingrese la url_foto_pregunta ( url_foto_pregunta5 )")
     let pregunta5 = new Preguntas()
-    pregunta5.preguntas = req.body.pregunta5    
+    pregunta5.preguntas = req.body.pregunta5
     pregunta5.foto_pregunta = req.body.url_foto_pregunta5
-    pregunta5.id = results.id    
+    pregunta5.id = results.id
     const preg5 = getRepository(Preguntas).create(pregunta5);
     const results08 = await getRepository(Preguntas).save(preg5);
 
-     //Posteamos las 3 respuestas de la pregunta//
+    //Posteamos las 3 respuestas de la pregunta//
     if (!req.body.opcion_correcta5) throw new Exception("Ingrese la respuesta correcta ( opcion_correcta5 )")
     if (!req.body.opcion_b5) throw new Exception("Ingrese una respuesta incorrecta ( opcion_b5 )")
     if (!req.body.opcion_c5) throw new Exception("Ingrese otra respuesta incorrecta ( opcion_c5 )")
@@ -203,4 +203,9 @@ export const postPreguntado = async (req: Request, res: Response): Promise<Respo
     return res.json(results);
 
 }
- /*⛔⛔⛔ Falta hacer las otras tablas dentro de esta ⛔⛔⛔*/
+
+// GET De un Preguntado //
+export const getPreguntado = async (req: Request, res: Response): Promise<Response> => {
+    const preguntado = await getRepository(Preguntado).findOne(req.params.id);
+    return res.json(preguntado);
+}
