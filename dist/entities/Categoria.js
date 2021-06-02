@@ -42,7 +42,7 @@ var Categoria = /** @class */ (function (_super) {
     ], Categoria.prototype, "name");
     __decorate([
         typeorm_1.OneToMany(function () { return Preguntado_1.Preguntado; }, function (preguntado) { return preguntado.categoria; }),
-        __metadata("design:type", Preguntado_1.Preguntado)
+        __metadata("design:type", Array)
     ], Categoria.prototype, "preguntado");
     Categoria = __decorate([
         typeorm_1.Entity()

@@ -28,11 +28,9 @@ export class Preguntado extends BaseEntity {
     comentario: Comentario;
 
     @ManyToOne(() => Categoria, categoria => categoria.preguntado)
-    @JoinColumn()
     categoria: Categoria;
 
     @OneToMany(() => Preguntas, preguntas => preguntas.preguntado)
-    @JoinColumn()
     preguntas: Preguntas
 
 

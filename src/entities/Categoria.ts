@@ -13,6 +13,5 @@ export class Categoria extends BaseEntity {
     name: string;
 
     @OneToMany(() => Preguntado, preguntado => preguntado.categoria)
-    preguntado: Preguntado;
-
+    preguntado: Preguntado[];
 }
