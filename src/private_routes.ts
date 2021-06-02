@@ -39,6 +39,15 @@ router.post('/preguntado', verifyToken, safe(actions.postPreguntado));
 
 
 
+
+
+
+
+
+
+
+
+
 // Nota poner metodo GET para preguntas en especifica //
 // Metodo Get para las respuestas especificas //
 

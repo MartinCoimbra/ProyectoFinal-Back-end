@@ -39,7 +39,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 exports.__esModule = true;
-exports.getPreguntado = exports.postPreguntado = exports.getPreguntados = exports.getCategoria = exports.getCategorias = exports.postCategoria = exports.login = exports.getUser = exports.createUser = void 0;
+exports.getPreguntas = exports.getPreguntado = exports.postPreguntado = exports.getPreguntados = exports.getCategoria = exports.getCategorias = exports.postCategoria = exports.login = exports.getUser = exports.createUser = void 0;
 var typeorm_1 = require("typeorm");
 var Usuario_1 = require("./entities/Usuario");
 var utils_1 = require("./utils");
@@ -177,8 +177,9 @@ var getPreguntados = function (req, res) { return __awaiter(void 0, void 0, void
 }); };
 exports.getPreguntados = getPreguntados;
 // POST de 1 preguntado (tematica) 
+// Fijarse los Save esta sobreescribiendo los valores //
 var postPreguntado = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var hayPreguntado, preguntadoo, preguntado, results, pregunta, preg, results2, respuesta, resp, results3, pregunta2, preg2, results02, respuesta2, resp2, results03, pregunta3, preg3, results04, respuesta3, resp3, results05, pregunta4, preg4, results06, respuesta4, resp4, results07, pregunta5, preg5, results08, respuesta5, resp5, results09;
+    var hayPreguntado, preguntadoo, preguntado, results, pregunta, preg, results2, respuesta, resp, results3, pregunta2, preg2, results02, respuesta2, resp2, results03, pregunta3, preg3, results04, respuesta3, resp3, results05, pregunta4, preg4, results06, respuesta4, resp4, results07;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -326,35 +327,42 @@ var postPreguntado = function (req, res) { return __awaiter(void 0, void 0, void
                 results07 = _a.sent();
                 /* ******************************************************************* */
                 /* QUINTA PREGUNTA Y SUS RESPUESTAS */
-                if (!req.body.pregunta5)
-                    throw new utils_1.Exception("Ingrese una pregunta ( pregunta5 )");
-                if (!req.body.url_foto_pregunta5)
-                    throw new utils_1.Exception("Ingrese la url_foto_pregunta ( url_foto_pregunta5 )");
-                pregunta5 = new Preguntas_1.Preguntas();
-                pregunta5.preguntas = req.body.pregunta5;
-                pregunta5.foto_pregunta = req.body.url_foto_pregunta5;
-                pregunta5.id = results.id;
-                preg5 = typeorm_1.getRepository(Preguntas_1.Preguntas).create(pregunta5);
-                return [4 /*yield*/, typeorm_1.getRepository(Preguntas_1.Preguntas).save(preg5)];
-            case 11:
-                results08 = _a.sent();
+                /*if (!req.body.pregunta5) throw new Exception("Ingrese una pregunta ( pregunta5 )")
+                if (!req.body.url_foto_pregunta5) throw new Exception("Ingrese la url_foto_pregunta ( url_foto_pregunta5 )")
+                let pregunta5 = new Preguntas()
+                pregunta5.preguntas = req.body.pregunta5
+                pregunta5.foto_pregunta = req.body.url_foto_pregunta5
+                pregunta5.id = results.id
+                const preg5 = getRepository(Preguntas).create(pregunta5);
+                const results08 = await getRepository(Preguntas).save(preg5);*/
                 //Posteamos las 3 respuestas de la pregunta//
-                if (!req.body.opcion_correcta5)
-                    throw new utils_1.Exception("Ingrese la respuesta correcta ( opcion_correcta5 )");
-                if (!req.body.opcion_b5)
-                    throw new utils_1.Exception("Ingrese una respuesta incorrecta ( opcion_b5 )");
-                if (!req.body.opcion_c5)
-                    throw new utils_1.Exception("Ingrese otra respuesta incorrecta ( opcion_c5 )");
-                respuesta5 = new Respuesta_1.Respuesta();
-                respuesta5.opcion_correcta = req.body.opcion_correcta5;
-                respuesta5.opcion_b = req.body.opcion_b5;
-                respuesta5.opcion_c = req.body.opcion_c5;
-                resp5 = typeorm_1.getRepository(Respuesta_1.Respuesta).create(respuesta5);
-                return [4 /*yield*/, typeorm_1.getRepository(Respuesta_1.Respuesta).save(resp5)];
-            case 12:
-                results09 = _a.sent();
+                /*if (!req.body.opcion_correcta5) throw new Exception("Ingrese la respuesta correcta ( opcion_correcta5 )")
+                if (!req.body.opcion_b5) throw new Exception("Ingrese una respuesta incorrecta ( opcion_b5 )")
+                if (!req.body.opcion_c5) throw new Exception("Ingrese otra respuesta incorrecta ( opcion_c5 )")
+                let respuesta5 = new Respuesta()
+                respuesta5.opcion_correcta = req.body.opcion_correcta5
+                respuesta5.opcion_b = req.body.opcion_b5
+                respuesta5.opcion_c = req.body.opcion_c5
+                const resp5 = getRepository(Respuesta).create(respuesta5);
+                const results09 = await getRepository(Respuesta).save(resp5);*/
                 /* ******************************************************************* */
-                return [2 /*return*/, res.json(results)];
+                console.log({ results: results,
+                    results2: results2,
+                    results3: results3,
+                    results04: results04,
+                    results05: results05,
+                    results06: results06,
+                    results07: results07
+                });
+                return [2 /*return*/, res.json({
+                        results: results,
+                        results2: results2,
+                        results3: results3,
+                        results04: results04,
+                        results05: results05,
+                        results06: results06,
+                        results07: results07
+                    })];
         }
     });
 }); };
@@ -372,3 +380,22 @@ var getPreguntado = function (req, res) { return __awaiter(void 0, void 0, void 
     });
 }); };
 exports.getPreguntado = getPreguntado;
+// GET pregunta de un temario en especifico //
+var getPreguntas = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var preguntas;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, typeorm_1.getRepository(Preguntas_1.Preguntas).find(
+                //relations: ['preguntado'],
+                //  where:{
+                //    id: req.params.id,
+                //  preguntado: req.params.id 
+                //}
+                )];
+            case 1:
+                preguntas = _a.sent();
+                return [2 /*return*/, res.json(preguntas)];
+        }
+    });
+}); };
+exports.getPreguntas = getPreguntas;

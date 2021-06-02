@@ -36,5 +36,6 @@ router.get('/preguntados', utils_1.safe(actions.getPreguntados));
 // Preguntado
 router.get('/preguntado/:id', utils_1.safe(actions.getPreguntado));
 // Metodo get para ver un preguntado en especifico//
+router.get('/preguntas', utils_1.safe(actions.getPreguntas));
 // Metodo get para ver preguntado de un metodo especifico//
 exports["default"] = router;
