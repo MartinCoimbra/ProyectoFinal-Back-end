@@ -33,5 +33,8 @@ router.get('/categorias', utils_1.safe(actions.getCategorias));
 router.get('/categoria/:id', utils_1.safe(actions.getCategoria));
 // Preguntados
 router.get('/preguntados', utils_1.safe(actions.getPreguntados));
-//router.get('/preguntado/:id', safe(actions.getPreguntado));
+// Preguntado
+router.get('/preguntado/:id', utils_1.safe(actions.getPreguntado));
+// Metodo get para ver un preguntado en especifico//
+// Metodo get para ver preguntado de un metodo especifico//
 exports["default"] = router;

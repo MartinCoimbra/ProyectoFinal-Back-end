@@ -39,7 +39,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 exports.__esModule = true;
-exports.postPreguntado = exports.getPreguntados = exports.getCategoria = exports.getCategorias = exports.postCategoria = exports.login = exports.getUser = exports.createUser = void 0;
+exports.getPreguntado = exports.postPreguntado = exports.getPreguntados = exports.getCategoria = exports.getCategorias = exports.postCategoria = exports.login = exports.getUser = exports.createUser = void 0;
 var typeorm_1 = require("typeorm");
 var Usuario_1 = require("./entities/Usuario");
 var utils_1 = require("./utils");
@@ -359,4 +359,16 @@ var postPreguntado = function (req, res) { return __awaiter(void 0, void 0, void
     });
 }); };
 exports.postPreguntado = postPreguntado;
-/*⛔⛔⛔ Falta hacer las otras tablas dentro de esta ⛔⛔⛔*/ 
+// GET De un Preguntado //
+var getPreguntado = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var preguntado;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, typeorm_1.getRepository(Preguntado_1.Preguntado).findOne(req.params.id)];
+            case 1:
+                preguntado = _a.sent();
+                return [2 /*return*/, res.json(preguntado)];
+        }
+    });
+}); };
+exports.getPreguntado = getPreguntado;
