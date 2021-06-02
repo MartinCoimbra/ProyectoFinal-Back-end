@@ -39,7 +39,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 exports.__esModule = true;
-exports.getPreguntas = exports.getPreguntado = exports.postPreguntado = exports.getPreguntados = exports.getCategoria = exports.getCategorias = exports.postCategoria = exports.login = exports.getUser = exports.createUser = void 0;
+exports.getPreguntas = exports.getPreguntado = exports.getPreguntados = exports.postPreguntado = exports.getCategoria = exports.getCategorias = exports.postCategoria = exports.login = exports.getUser = exports.createUser = void 0;
 var typeorm_1 = require("typeorm");
 var Usuario_1 = require("./entities/Usuario");
 var utils_1 = require("./utils");
@@ -163,23 +163,15 @@ var getCategoria = function (req, res) { return __awaiter(void 0, void 0, void 0
     });
 }); };
 exports.getCategoria = getCategoria;
-// GET(Leer) Todos los preguntados(tematicas)
-var getPreguntados = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var preguntados;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, typeorm_1.getRepository(Preguntado_1.Preguntado).find()];
-            case 1:
-                preguntados = _a.sent();
-                return [2 /*return*/, res.json(preguntados)];
-        }
-    });
-}); };
-exports.getPreguntados = getPreguntados;
-// POST de 1 preguntado (tematica) 
-// Fijarse los Save esta sobreescribiendo los valores //
+// POST de 1 preguntado (tematica) 💥
+/*
+*   1-No se postean todas las preguntas
+*   2-Visualisar las respuesta de ese mismo preguntado
+*   3-Esta sobre escribiendo los valores?
+*   4- Fijate que las respuesta tenga el id de la pregunta (el cual es auto incremental)
+*/
 var postPreguntado = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var hayPreguntado, preguntadoo, preguntado, results, pregunta, preg, results2, respuesta, resp, results3, pregunta2, preg2, results02, respuesta2, resp2, results03, pregunta3, preg3, results04, respuesta3, resp3, results05, pregunta4, preg4, results06, respuesta4, resp4, results07;
+    var hayPreguntado, preguntadoo, preguntado, results, pregunta, preg, results2, resultstado, respuesta, resp, results3, pregunta2, preg2, results02, respuesta2, resp2, results03, pregunta3, preg3, results04, respuesta3, resp3, results05, pregunta4, preg4, results06, respuesta4, resp4, results07, pregunta5, preg5, results08, respuesta5, resp5, results09;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -192,6 +184,56 @@ var postPreguntado = function (req, res) { return __awaiter(void 0, void 0, void
                     throw new utils_1.Exception("Ingrese una url del preguntado ( url_foto )");
                 if (!req.body.categoria)
                     throw new utils_1.Exception("Ingrese una ( categoria )");
+                if (!req.body.pregunta)
+                    throw new utils_1.Exception("Ingrese una pregunta ( pregunta )");
+                if (!req.body.url_foto_pregunta)
+                    throw new utils_1.Exception("Ingrese la url_foto_pregunta ( url_foto_pregunta )");
+                if (!req.body.opcion_correcta)
+                    throw new utils_1.Exception("Ingrese la respuesta correcta ( opcion_correcta )");
+                if (!req.body.opcion_b)
+                    throw new utils_1.Exception("Ingrese una respuesta incorrecta ( opcion_b )");
+                if (!req.body.opcion_c)
+                    throw new utils_1.Exception("Ingrese otra respuesta incorrecta ( opcion_c )");
+                if (!req.body.pregunta2)
+                    throw new utils_1.Exception("Ingrese una pregunta ( pregunta2 )");
+                if (!req.body.url_foto_pregunta2)
+                    throw new utils_1.Exception("Ingrese la url_foto_pregunta ( url_foto_pregunta2 )");
+                if (!req.body.opcion_correcta2)
+                    throw new utils_1.Exception("Ingrese la respuesta correcta ( opcion_correcta2 )");
+                if (!req.body.opcion_b2)
+                    throw new utils_1.Exception("Ingrese una respuesta incorrecta ( opcion_b2 )");
+                if (!req.body.opcion_c2)
+                    throw new utils_1.Exception("Ingrese otra respuesta incorrecta ( opcion_c2 )");
+                if (!req.body.pregunta3)
+                    throw new utils_1.Exception("Ingrese una pregunta ( pregunta3 )");
+                if (!req.body.url_foto_pregunta3)
+                    throw new utils_1.Exception("Ingrese la url_foto_pregunta ( url_foto_pregunta3 )");
+                if (!req.body.opcion_correcta3)
+                    throw new utils_1.Exception("Ingrese la respuesta correcta ( opcion_correcta3 )");
+                if (!req.body.opcion_b3)
+                    throw new utils_1.Exception("Ingrese una respuesta incorrecta ( opcion_b3 )");
+                if (!req.body.opcion_c3)
+                    throw new utils_1.Exception("Ingrese otra respuesta incorrecta ( opcion_c3 )");
+                if (!req.body.pregunta4)
+                    throw new utils_1.Exception("Ingrese una pregunta ( pregunta4 )");
+                if (!req.body.url_foto_pregunta4)
+                    throw new utils_1.Exception("Ingrese la url_foto_pregunta ( url_foto_pregunta4 )");
+                if (!req.body.opcion_correcta4)
+                    throw new utils_1.Exception("Ingrese la respuesta correcta ( opcion_correcta4 )");
+                if (!req.body.opcion_b4)
+                    throw new utils_1.Exception("Ingrese una respuesta incorrecta ( opcion_b4 )");
+                if (!req.body.opcion_c4)
+                    throw new utils_1.Exception("Ingrese otra respuesta incorrecta ( opcion_c4 )");
+                if (!req.body.pregunta5)
+                    throw new utils_1.Exception("Ingrese una pregunta ( pregunta5 )");
+                if (!req.body.url_foto_pregunta5)
+                    throw new utils_1.Exception("Ingrese la url_foto_pregunta ( url_foto_pregunta5 )");
+                if (!req.body.opcion_correcta5)
+                    throw new utils_1.Exception("Ingrese la respuesta correcta ( opcion_correcta5 )");
+                if (!req.body.opcion_b5)
+                    throw new utils_1.Exception("Ingrese una respuesta incorrecta ( opcion_b5 )");
+                if (!req.body.opcion_c5)
+                    throw new utils_1.Exception("Ingrese otra respuesta incorrecta ( opcion_c5 )");
                 return [4 /*yield*/, typeorm_1.getRepository(Preguntado_1.Preguntado).findOne({ where: { nombre: req.body.nombre } })];
             case 1:
                 hayPreguntado = _a.sent();
@@ -202,18 +244,13 @@ var postPreguntado = function (req, res) { return __awaiter(void 0, void 0, void
                 preguntadoo.descripcion = req.body.descripcion;
                 preguntadoo.url_foto = req.body.url_foto;
                 preguntadoo.nombre = req.body.nombre;
+                console.log(preguntadoo);
                 preguntado = typeorm_1.getRepository(Preguntado_1.Preguntado).create(preguntadoo);
                 return [4 /*yield*/, typeorm_1.getRepository(Preguntado_1.Preguntado).save(preguntado)];
             case 2:
                 results = _a.sent();
+                console.log(results);
                 console.log(results.id);
-                /* ******************************************************************* */
-                /* PRIMERA PREGUNTA Y SUS RESPUESTAS */
-                //Posteamos la primera pregunta//
-                if (!req.body.pregunta)
-                    throw new utils_1.Exception("Ingrese una pregunta ( pregunta )");
-                if (!req.body.url_foto_pregunta)
-                    throw new utils_1.Exception("Ingrese la url_foto_pregunta ( url_foto_pregunta )");
                 pregunta = new Preguntas_1.Preguntas();
                 pregunta.preguntas = req.body.pregunta;
                 pregunta.foto_pregunta = req.body.url_foto_pregunta;
@@ -223,14 +260,9 @@ var postPreguntado = function (req, res) { return __awaiter(void 0, void 0, void
             case 3:
                 results2 = _a.sent();
                 console.log(results2.id);
-                //Posteamos las 3 respuestas de la pregunta//
-                if (!req.body.opcion_correcta)
-                    throw new utils_1.Exception("Ingrese la respuesta correcta ( opcion_correcta )");
-                if (!req.body.opcion_b)
-                    throw new utils_1.Exception("Ingrese una respuesta incorrecta ( opcion_b )");
-                if (!req.body.opcion_c)
-                    throw new utils_1.Exception("Ingrese otra respuesta incorrecta ( opcion_c )");
+                resultstado = results2.id;
                 respuesta = new Respuesta_1.Respuesta();
+                // respuesta.pregunta
                 respuesta.opcion_correcta = req.body.opcion_correcta;
                 respuesta.opcion_b = req.body.opcion_b;
                 respuesta.opcion_c = req.body.opcion_c;
@@ -238,12 +270,6 @@ var postPreguntado = function (req, res) { return __awaiter(void 0, void 0, void
                 return [4 /*yield*/, typeorm_1.getRepository(Respuesta_1.Respuesta).save(resp)];
             case 4:
                 results3 = _a.sent();
-                /* ******************************************************************* */
-                /* SEGUNDA PREGUNTA Y SUS RESPUESTAS */
-                if (!req.body.pregunta2)
-                    throw new utils_1.Exception("Ingrese una pregunta ( pregunta2 )");
-                if (!req.body.url_foto_pregunta2)
-                    throw new utils_1.Exception("Ingrese la url_foto_pregunta ( url_foto_pregunta2 )");
                 pregunta2 = new Preguntas_1.Preguntas();
                 pregunta2.preguntas = req.body.pregunta2;
                 pregunta2.foto_pregunta = req.body.url_foto_pregunta2;
@@ -252,13 +278,6 @@ var postPreguntado = function (req, res) { return __awaiter(void 0, void 0, void
                 return [4 /*yield*/, typeorm_1.getRepository(Preguntas_1.Preguntas).save(preg2)];
             case 5:
                 results02 = _a.sent();
-                //Posteamos las 3 respuestas de la pregunta//
-                if (!req.body.opcion_correcta2)
-                    throw new utils_1.Exception("Ingrese la respuesta correcta ( opcion_correcta2 )");
-                if (!req.body.opcion_b2)
-                    throw new utils_1.Exception("Ingrese una respuesta incorrecta ( opcion_b2 )");
-                if (!req.body.opcion_c2)
-                    throw new utils_1.Exception("Ingrese otra respuesta incorrecta ( opcion_c2 )");
                 respuesta2 = new Respuesta_1.Respuesta();
                 respuesta2.opcion_correcta = req.body.opcion_correcta2;
                 respuesta2.opcion_b = req.body.opcion_b2;
@@ -267,12 +286,6 @@ var postPreguntado = function (req, res) { return __awaiter(void 0, void 0, void
                 return [4 /*yield*/, typeorm_1.getRepository(Respuesta_1.Respuesta).save(resp2)];
             case 6:
                 results03 = _a.sent();
-                /* ******************************************************************* */
-                /* TERCERA PREGUNTA Y SUS RESPUESTAS */
-                if (!req.body.pregunta3)
-                    throw new utils_1.Exception("Ingrese una pregunta ( pregunta3 )");
-                if (!req.body.url_foto_pregunta3)
-                    throw new utils_1.Exception("Ingrese la url_foto_pregunta ( url_foto_pregunta3 )");
                 pregunta3 = new Preguntas_1.Preguntas();
                 pregunta3.preguntas = req.body.pregunta3;
                 pregunta3.foto_pregunta = req.body.url_foto_pregunta3;
@@ -281,13 +294,6 @@ var postPreguntado = function (req, res) { return __awaiter(void 0, void 0, void
                 return [4 /*yield*/, typeorm_1.getRepository(Preguntas_1.Preguntas).save(preg3)];
             case 7:
                 results04 = _a.sent();
-                //Posteamos las 3 respuestas de la pregunta//
-                if (!req.body.opcion_correcta3)
-                    throw new utils_1.Exception("Ingrese la respuesta correcta ( opcion_correcta3 )");
-                if (!req.body.opcion_b3)
-                    throw new utils_1.Exception("Ingrese una respuesta incorrecta ( opcion_b3 )");
-                if (!req.body.opcion_c3)
-                    throw new utils_1.Exception("Ingrese otra respuesta incorrecta ( opcion_c3 )");
                 respuesta3 = new Respuesta_1.Respuesta();
                 respuesta3.opcion_correcta = req.body.opcion_correcta3;
                 respuesta3.opcion_b = req.body.opcion_b3;
@@ -296,12 +302,6 @@ var postPreguntado = function (req, res) { return __awaiter(void 0, void 0, void
                 return [4 /*yield*/, typeorm_1.getRepository(Respuesta_1.Respuesta).save(resp3)];
             case 8:
                 results05 = _a.sent();
-                /* ******************************************************************* */
-                /* CUARTA PREGUNTA Y SUS RESPUESTAS */
-                if (!req.body.pregunta4)
-                    throw new utils_1.Exception("Ingrese una pregunta ( pregunta4 )");
-                if (!req.body.url_foto_pregunta4)
-                    throw new utils_1.Exception("Ingrese la url_foto_pregunta ( url_foto_pregunta4 )");
                 pregunta4 = new Preguntas_1.Preguntas();
                 pregunta4.preguntas = req.body.pregunta4;
                 pregunta4.foto_pregunta = req.body.url_foto_pregunta4;
@@ -310,13 +310,6 @@ var postPreguntado = function (req, res) { return __awaiter(void 0, void 0, void
                 return [4 /*yield*/, typeorm_1.getRepository(Preguntas_1.Preguntas).save(preg4)];
             case 9:
                 results06 = _a.sent();
-                //Posteamos las 3 respuestas de la pregunta//
-                if (!req.body.opcion_correcta4)
-                    throw new utils_1.Exception("Ingrese la respuesta correcta ( opcion_correcta4 )");
-                if (!req.body.opcion_b4)
-                    throw new utils_1.Exception("Ingrese una respuesta incorrecta ( opcion_b4 )");
-                if (!req.body.opcion_c4)
-                    throw new utils_1.Exception("Ingrese otra respuesta incorrecta ( opcion_c4 )");
                 respuesta4 = new Respuesta_1.Respuesta();
                 respuesta4.opcion_correcta = req.body.opcion_correcta4;
                 respuesta4.opcion_b = req.body.opcion_b4;
@@ -325,28 +318,24 @@ var postPreguntado = function (req, res) { return __awaiter(void 0, void 0, void
                 return [4 /*yield*/, typeorm_1.getRepository(Respuesta_1.Respuesta).save(resp4)];
             case 10:
                 results07 = _a.sent();
-                /* ******************************************************************* */
-                /* QUINTA PREGUNTA Y SUS RESPUESTAS */
-                /*if (!req.body.pregunta5) throw new Exception("Ingrese una pregunta ( pregunta5 )")
-                if (!req.body.url_foto_pregunta5) throw new Exception("Ingrese la url_foto_pregunta ( url_foto_pregunta5 )")
-                let pregunta5 = new Preguntas()
-                pregunta5.preguntas = req.body.pregunta5
-                pregunta5.foto_pregunta = req.body.url_foto_pregunta5
-                pregunta5.id = results.id
-                const preg5 = getRepository(Preguntas).create(pregunta5);
-                const results08 = await getRepository(Preguntas).save(preg5);*/
-                //Posteamos las 3 respuestas de la pregunta//
-                /*if (!req.body.opcion_correcta5) throw new Exception("Ingrese la respuesta correcta ( opcion_correcta5 )")
-                if (!req.body.opcion_b5) throw new Exception("Ingrese una respuesta incorrecta ( opcion_b5 )")
-                if (!req.body.opcion_c5) throw new Exception("Ingrese otra respuesta incorrecta ( opcion_c5 )")
-                let respuesta5 = new Respuesta()
-                respuesta5.opcion_correcta = req.body.opcion_correcta5
-                respuesta5.opcion_b = req.body.opcion_b5
-                respuesta5.opcion_c = req.body.opcion_c5
-                const resp5 = getRepository(Respuesta).create(respuesta5);
-                const results09 = await getRepository(Respuesta).save(resp5);*/
-                /* ******************************************************************* */
-                console.log({ results: results,
+                pregunta5 = new Preguntas_1.Preguntas();
+                pregunta5.preguntas = req.body.pregunta5;
+                pregunta5.foto_pregunta = req.body.url_foto_pregunta5;
+                pregunta5.id = results.id;
+                preg5 = typeorm_1.getRepository(Preguntas_1.Preguntas).create(pregunta5);
+                return [4 /*yield*/, typeorm_1.getRepository(Preguntas_1.Preguntas).save(preg5)];
+            case 11:
+                results08 = _a.sent();
+                respuesta5 = new Respuesta_1.Respuesta();
+                respuesta5.opcion_correcta = req.body.opcion_correcta5;
+                respuesta5.opcion_b = req.body.opcion_b5;
+                respuesta5.opcion_c = req.body.opcion_c5;
+                resp5 = typeorm_1.getRepository(Respuesta_1.Respuesta).create(respuesta5);
+                return [4 /*yield*/, typeorm_1.getRepository(Respuesta_1.Respuesta).save(resp5)];
+            case 12:
+                results09 = _a.sent();
+                console.log({
+                    results: results,
                     results2: results2,
                     results3: results3,
                     results04: results04,
@@ -358,40 +347,53 @@ var postPreguntado = function (req, res) { return __awaiter(void 0, void 0, void
                         results: results,
                         results2: results2,
                         results3: results3,
+                        results02: results02,
+                        results03: results03,
                         results04: results04,
                         results05: results05,
                         results06: results06,
-                        results07: results07
+                        results07: results07,
+                        results08: results08,
+                        results09: results09
                     })];
         }
     });
 }); };
 exports.postPreguntado = postPreguntado;
-// GET De un Preguntado //
+// GET(Leer) Todos los preguntados(tematicas) ✅
+var getPreguntados = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var preguntados;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, typeorm_1.getRepository(Preguntado_1.Preguntado).find({ relations: ['categoria'] })];
+            case 1:
+                preguntados = _a.sent();
+                return [2 /*return*/, res.json(preguntados)];
+        }
+    });
+}); };
+exports.getPreguntados = getPreguntados;
+// GET De un Preguntado ✅
 var getPreguntado = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var preguntado;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, typeorm_1.getRepository(Preguntado_1.Preguntado).findOne(req.params.id)];
+            case 0: return [4 /*yield*/, typeorm_1.getRepository(Preguntado_1.Preguntado).find({ where: { id: req.params.id },
+                    relations: ['categoria'] })];
             case 1:
                 preguntado = _a.sent();
+                //const preguntado = await getRepository(Preguntado).findOne(req.params.id);
                 return [2 /*return*/, res.json(preguntado)];
         }
     });
 }); };
 exports.getPreguntado = getPreguntado;
-// GET pregunta de un temario en especifico //
+// GET pregunta de un temario en especifico 💥
 var getPreguntas = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var preguntas;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, typeorm_1.getRepository(Preguntas_1.Preguntas).find(
-                //relations: ['preguntado'],
-                //  where:{
-                //    id: req.params.id,
-                //  preguntado: req.params.id 
-                //}
-                )];
+            case 0: return [4 /*yield*/, typeorm_1.getRepository(Preguntas_1.Preguntas).find({ relations: ['respuesta'] })];
             case 1:
                 preguntas = _a.sent();
                 return [2 /*return*/, res.json(preguntas)];

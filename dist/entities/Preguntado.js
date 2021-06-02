@@ -63,7 +63,9 @@ var Preguntado = /** @class */ (function (_super) {
         __metadata("design:type", Categoria_1.Categoria)
     ], Preguntado.prototype, "categoria");
     __decorate([
-        typeorm_1.OneToMany(function () { return Preguntas_1.Preguntas; }, function (preguntas) { return preguntas.preguntado; }),
+        typeorm_1.OneToMany(function () { return Preguntas_1.Preguntas; }, function (preguntas) { return preguntas.preguntado; }, {
+            cascade: true
+        }),
         __metadata("design:type", Preguntas_1.Preguntas)
     ], Preguntado.prototype, "preguntas");
     Preguntado = __decorate([

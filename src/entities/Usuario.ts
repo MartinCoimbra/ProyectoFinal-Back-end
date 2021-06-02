@@ -34,6 +34,6 @@ export class Usuario extends BaseEntity {
     coins: Coins;
 
     @OneToMany(() => Comentario, comentario => comentario.usuario)
-    comentario: Comentario;
+    comentario: Comentario[];
 
 }

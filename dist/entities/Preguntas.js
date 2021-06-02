@@ -50,9 +50,10 @@ var Preguntas = /** @class */ (function (_super) {
         __metadata("design:type", Preguntado_1.Preguntado)
     ], Preguntas.prototype, "preguntado");
     __decorate([
-        typeorm_1.OneToMany(function () { return Respuesta_1.Respuesta; }, function (respuesta) { return respuesta.pregunta; }),
-        typeorm_1.JoinColumn(),
-        __metadata("design:type", Respuesta_1.Respuesta)
+        typeorm_1.OneToMany(function () { return Respuesta_1.Respuesta; }, function (respuesta) { return respuesta.pregunta; }, {
+            cascade: true
+        }),
+        __metadata("design:type", Array)
     ], Preguntas.prototype, "respuesta");
     Preguntas = __decorate([
         typeorm_1.Entity()

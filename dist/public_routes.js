@@ -23,19 +23,19 @@ var express_1 = require("express");
 var utils_1 = require("./utils");
 var actions = __importStar(require("./actions"));
 var router = express_1.Router();
-// POST registro 
+// POST registro  ✅
 router.post('/user', utils_1.safe(actions.createUser));
-//POST categorias
+//POST categorias ✅
 router.post('/login', utils_1.safe(actions.login));
-//GET todas categorias
+//GET todas categorias ✅
 router.get('/categorias', utils_1.safe(actions.getCategorias));
-//GET una categoria
+//GET una categoria ✅
 router.get('/categoria/:id', utils_1.safe(actions.getCategoria));
-// Preguntados
+// Preguntados ❔
 router.get('/preguntados', utils_1.safe(actions.getPreguntados));
-// Preguntado
+// Preguntado ❔
 router.get('/preguntado/:id', utils_1.safe(actions.getPreguntado));
-// Metodo get para ver un preguntado en especifico//
+// Metodo get para ver un preguntas en especifico ❔
 router.get('/preguntas', utils_1.safe(actions.getPreguntas));
 // Metodo get para ver preguntado de un metodo especifico//
 exports["default"] = router;

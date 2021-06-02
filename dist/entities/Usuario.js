@@ -67,7 +67,7 @@ var Usuario = /** @class */ (function (_super) {
     ], Usuario.prototype, "coins");
     __decorate([
         typeorm_1.OneToMany(function () { return Comentario_1.Comentario; }, function (comentario) { return comentario.usuario; }),
-        __metadata("design:type", Comentario_1.Comentario)
+        __metadata("design:type", Array)
     ], Usuario.prototype, "comentario");
     Usuario = __decorate([
         typeorm_1.Entity()

@@ -2,21 +2,23 @@ import { Router } from 'express';
 import { safe } from './utils';
 import * as actions from './actions';
 const router = Router();
-// POST registro 
+// POST registro  ✅
 router.post('/user', safe(actions.createUser));
-//POST categorias
+//POST categorias ✅
 router.post('/login', safe(actions.login));
-//GET todas categorias
+//GET todas categorias ✅
 router.get('/categorias', safe(actions.getCategorias));
-//GET una categoria
+//GET una categoria ✅
 router.get('/categoria/:id', safe(actions.getCategoria));
-// Preguntados
+
+// Preguntados ❔
 router.get('/preguntados', safe(actions.getPreguntados));
-// Preguntado
+
+// Preguntado ❔
 router.get('/preguntado/:id', safe(actions.getPreguntado));
 
-// Metodo get para ver un preguntado en especifico//
 
+// Metodo get para ver un preguntas en especifico ❔
 router.get('/preguntas', safe(actions.getPreguntas))
 
 

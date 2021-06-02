@@ -23,14 +23,16 @@ export class Preguntado extends BaseEntity {
     @Column()
     url_foto: string;
 
-
     @OneToMany(() => Comentario, comentario => comentario.preguntado)
     comentario: Comentario;
 
     @ManyToOne(() => Categoria, categoria => categoria.preguntado)
     categoria: Categoria;
 
-    @OneToMany(() => Preguntas, preguntas => preguntas.preguntado)
+    @OneToMany(() => Preguntas, preguntas => preguntas.preguntado, {
+        cascade: true,
+    })
+
     preguntas: Preguntas
 
 

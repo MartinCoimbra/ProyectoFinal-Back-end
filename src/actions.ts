@@ -63,20 +63,51 @@ export const getCategoria = async (req: Request, res: Response): Promise<Respons
     const categoria = await getRepository(Categoria).findOne(req.params.id);
     return res.json(categoria);
 }
-// GET(Leer) Todos los preguntados(tematicas)
-export const getPreguntados = async (req: Request, res: Response): Promise<Response> => {
-    const preguntados = await getRepository(Preguntado).find();
-    return res.json(preguntados);
-}
-// POST de 1 preguntado (tematica) 
-// Fijarse los Save esta sobreescribiendo los valores //
+
+// POST de 1 preguntado (tematica) 💥
+/*
+*   1-No se postean todas las preguntas
+*   2-Visualisar las respuesta de ese mismo preguntado
+*   3-Esta sobre escribiendo los valores?
+*   4- Fijate que las respuesta tenga el id de la pregunta (el cual es auto incremental)
+*/
 export const postPreguntado = async (req: Request, res: Response): Promise<Response> => {
     /* Verificamos los datos de la tabla preguntado */
     if (!req.body.nombre) throw new Exception("Ingrese nombre del preguntado ( nombre )")
     if (!req.body.descripcion) throw new Exception("Ingrese una descripcion del preguntado ( descripcion )")
     if (!req.body.url_foto) throw new Exception("Ingrese una url del preguntado ( url_foto )")
     if (!req.body.categoria) throw new Exception("Ingrese una ( categoria )")
-    /* Si hay una preguntado(tematica) con ese nombre no la vamos a postear para no repetir */
+
+    if (!req.body.pregunta) throw new Exception("Ingrese una pregunta ( pregunta )")
+    if (!req.body.url_foto_pregunta) throw new Exception("Ingrese la url_foto_pregunta ( url_foto_pregunta )")
+    if (!req.body.opcion_correcta) throw new Exception("Ingrese la respuesta correcta ( opcion_correcta )")
+    if (!req.body.opcion_b) throw new Exception("Ingrese una respuesta incorrecta ( opcion_b )")
+    if (!req.body.opcion_c) throw new Exception("Ingrese otra respuesta incorrecta ( opcion_c )")
+
+    if (!req.body.pregunta2) throw new Exception("Ingrese una pregunta ( pregunta2 )")
+    if (!req.body.url_foto_pregunta2) throw new Exception("Ingrese la url_foto_pregunta ( url_foto_pregunta2 )")
+    if (!req.body.opcion_correcta2) throw new Exception("Ingrese la respuesta correcta ( opcion_correcta2 )")
+    if (!req.body.opcion_b2) throw new Exception("Ingrese una respuesta incorrecta ( opcion_b2 )")
+    if (!req.body.opcion_c2) throw new Exception("Ingrese otra respuesta incorrecta ( opcion_c2 )")
+
+    if (!req.body.pregunta3) throw new Exception("Ingrese una pregunta ( pregunta3 )")
+    if (!req.body.url_foto_pregunta3) throw new Exception("Ingrese la url_foto_pregunta ( url_foto_pregunta3 )")
+    if (!req.body.opcion_correcta3) throw new Exception("Ingrese la respuesta correcta ( opcion_correcta3 )")
+    if (!req.body.opcion_b3) throw new Exception("Ingrese una respuesta incorrecta ( opcion_b3 )")
+    if (!req.body.opcion_c3) throw new Exception("Ingrese otra respuesta incorrecta ( opcion_c3 )")
+
+    if (!req.body.pregunta4) throw new Exception("Ingrese una pregunta ( pregunta4 )")
+    if (!req.body.url_foto_pregunta4) throw new Exception("Ingrese la url_foto_pregunta ( url_foto_pregunta4 )")
+    if (!req.body.opcion_correcta4) throw new Exception("Ingrese la respuesta correcta ( opcion_correcta4 )")
+    if (!req.body.opcion_b4) throw new Exception("Ingrese una respuesta incorrecta ( opcion_b4 )")
+    if (!req.body.opcion_c4) throw new Exception("Ingrese otra respuesta incorrecta ( opcion_c4 )")
+
+    if (!req.body.pregunta5) throw new Exception("Ingrese una pregunta ( pregunta5 )")
+    if (!req.body.url_foto_pregunta5) throw new Exception("Ingrese la url_foto_pregunta ( url_foto_pregunta5 )")
+    if (!req.body.opcion_correcta5) throw new Exception("Ingrese la respuesta correcta ( opcion_correcta5 )")
+    if (!req.body.opcion_b5) throw new Exception("Ingrese una respuesta incorrecta ( opcion_b5 )")
+    if (!req.body.opcion_c5) throw new Exception("Ingrese otra respuesta incorrecta ( opcion_c5 )")
+
     const hayPreguntado = await getRepository(Preguntado).findOne({ where: { nombre: req.body.nombre } });
     if (hayPreguntado) throw new Exception("Ya hay una tematica con ese nombre")
 
@@ -85,18 +116,16 @@ export const postPreguntado = async (req: Request, res: Response): Promise<Respo
     preguntadoo.descripcion = req.body.descripcion
     preguntadoo.url_foto = req.body.url_foto
     preguntadoo.nombre = req.body.nombre
+    console.log(preguntadoo);
+    
     const preguntado = getRepository(Preguntado).create(preguntadoo);
     const results = await getRepository(Preguntado).save(preguntado);
-
-
+    console.log(results)
+    
     console.log(results.id)
 
-    /* ******************************************************************* */
     /* PRIMERA PREGUNTA Y SUS RESPUESTAS */
-
     //Posteamos la primera pregunta//
-    if (!req.body.pregunta) throw new Exception("Ingrese una pregunta ( pregunta )")
-    if (!req.body.url_foto_pregunta) throw new Exception("Ingrese la url_foto_pregunta ( url_foto_pregunta )")
     let pregunta = new Preguntas()
     pregunta.preguntas = req.body.pregunta
     pregunta.foto_pregunta = req.body.url_foto_pregunta
@@ -104,21 +133,18 @@ export const postPreguntado = async (req: Request, res: Response): Promise<Respo
     const preg = getRepository(Preguntas).create(pregunta);
     const results2 = await getRepository(Preguntas).save(preg);
     console.log(results2.id)
+    let resultstado = results2.id
 
     //Posteamos las 3 respuestas de la pregunta//
-    if (!req.body.opcion_correcta) throw new Exception("Ingrese la respuesta correcta ( opcion_correcta )")
-    if (!req.body.opcion_b) throw new Exception("Ingrese una respuesta incorrecta ( opcion_b )")
-    if (!req.body.opcion_c) throw new Exception("Ingrese otra respuesta incorrecta ( opcion_c )")
     let respuesta = new Respuesta()
+    // respuesta.pregunta
     respuesta.opcion_correcta = req.body.opcion_correcta
     respuesta.opcion_b = req.body.opcion_b
     respuesta.opcion_c = req.body.opcion_c
     const resp = getRepository(Respuesta).create(respuesta);
     const results3 = await getRepository(Respuesta).save(resp);
-    /* ******************************************************************* */
+
     /* SEGUNDA PREGUNTA Y SUS RESPUESTAS */
-    if (!req.body.pregunta2) throw new Exception("Ingrese una pregunta ( pregunta2 )")
-    if (!req.body.url_foto_pregunta2) throw new Exception("Ingrese la url_foto_pregunta ( url_foto_pregunta2 )")
     let pregunta2 = new Preguntas()
     pregunta2.preguntas = req.body.pregunta2
     pregunta2.foto_pregunta = req.body.url_foto_pregunta2
@@ -127,88 +153,67 @@ export const postPreguntado = async (req: Request, res: Response): Promise<Respo
     const results02 = await getRepository(Preguntas).save(preg2);
 
     //Posteamos las 3 respuestas de la pregunta//
-    if (!req.body.opcion_correcta2) throw new Exception("Ingrese la respuesta correcta ( opcion_correcta2 )")
-    if (!req.body.opcion_b2) throw new Exception("Ingrese una respuesta incorrecta ( opcion_b2 )")
-    if (!req.body.opcion_c2) throw new Exception("Ingrese otra respuesta incorrecta ( opcion_c2 )")
     let respuesta2 = new Respuesta()
     respuesta2.opcion_correcta = req.body.opcion_correcta2
     respuesta2.opcion_b = req.body.opcion_b2
     respuesta2.opcion_c = req.body.opcion_c2
     const resp2 = getRepository(Respuesta).create(respuesta2);
     const results03 = await getRepository(Respuesta).save(resp2);
-    /* ******************************************************************* */
+
     /* TERCERA PREGUNTA Y SUS RESPUESTAS */
-    if (!req.body.pregunta3) throw new Exception("Ingrese una pregunta ( pregunta3 )")
-    if (!req.body.url_foto_pregunta3) throw new Exception("Ingrese la url_foto_pregunta ( url_foto_pregunta3 )")
     let pregunta3 = new Preguntas()
     pregunta3.preguntas = req.body.pregunta3
     pregunta3.foto_pregunta = req.body.url_foto_pregunta3
     pregunta3.id = results.id
+
     const preg3 = getRepository(Preguntas).create(pregunta3);
     const results04 = await getRepository(Preguntas).save(preg3);
 
     //Posteamos las 3 respuestas de la pregunta//
-    if (!req.body.opcion_correcta3) throw new Exception("Ingrese la respuesta correcta ( opcion_correcta3 )")
-    if (!req.body.opcion_b3) throw new Exception("Ingrese una respuesta incorrecta ( opcion_b3 )")
-    if (!req.body.opcion_c3) throw new Exception("Ingrese otra respuesta incorrecta ( opcion_c3 )")
     let respuesta3 = new Respuesta()
     respuesta3.opcion_correcta = req.body.opcion_correcta3
     respuesta3.opcion_b = req.body.opcion_b3
     respuesta3.opcion_c = req.body.opcion_c3
+
     const resp3 = getRepository(Respuesta).create(respuesta3);
     const results05 = await getRepository(Respuesta).save(resp3);
-    /* ******************************************************************* */
+
     /* CUARTA PREGUNTA Y SUS RESPUESTAS */
-    if (!req.body.pregunta4) throw new Exception("Ingrese una pregunta ( pregunta4 )")
-    if (!req.body.url_foto_pregunta4) throw new Exception("Ingrese la url_foto_pregunta ( url_foto_pregunta4 )")
     let pregunta4 = new Preguntas()
     pregunta4.preguntas = req.body.pregunta4
     pregunta4.foto_pregunta = req.body.url_foto_pregunta4
     pregunta4.id = results.id
+
     const preg4 = getRepository(Preguntas).create(pregunta4);
     const results06 = await getRepository(Preguntas).save(preg4);
 
     //Posteamos las 3 respuestas de la pregunta//
-    if (!req.body.opcion_correcta4) throw new Exception("Ingrese la respuesta correcta ( opcion_correcta4 )")
-    if (!req.body.opcion_b4) throw new Exception("Ingrese una respuesta incorrecta ( opcion_b4 )")
-    if (!req.body.opcion_c4) throw new Exception("Ingrese otra respuesta incorrecta ( opcion_c4 )")
     let respuesta4 = new Respuesta()
     respuesta4.opcion_correcta = req.body.opcion_correcta4
     respuesta4.opcion_b = req.body.opcion_b4
     respuesta4.opcion_c = req.body.opcion_c4
+
     const resp4 = getRepository(Respuesta).create(respuesta4);
     const results07 = await getRepository(Respuesta).save(resp4);
-    /* ******************************************************************* */
+
     /* QUINTA PREGUNTA Y SUS RESPUESTAS */
-    /*if (!req.body.pregunta5) throw new Exception("Ingrese una pregunta ( pregunta5 )")
-    if (!req.body.url_foto_pregunta5) throw new Exception("Ingrese la url_foto_pregunta ( url_foto_pregunta5 )")
     let pregunta5 = new Preguntas()
     pregunta5.preguntas = req.body.pregunta5
     pregunta5.foto_pregunta = req.body.url_foto_pregunta5
     pregunta5.id = results.id
+
     const preg5 = getRepository(Preguntas).create(pregunta5);
-    const results08 = await getRepository(Preguntas).save(preg5);*/
+    const results08 = await getRepository(Preguntas).save(preg5);
 
     //Posteamos las 3 respuestas de la pregunta//
-    /*if (!req.body.opcion_correcta5) throw new Exception("Ingrese la respuesta correcta ( opcion_correcta5 )")
-    if (!req.body.opcion_b5) throw new Exception("Ingrese una respuesta incorrecta ( opcion_b5 )")
-    if (!req.body.opcion_c5) throw new Exception("Ingrese otra respuesta incorrecta ( opcion_c5 )")
     let respuesta5 = new Respuesta()
     respuesta5.opcion_correcta = req.body.opcion_correcta5
     respuesta5.opcion_b = req.body.opcion_b5
     respuesta5.opcion_c = req.body.opcion_c5
     const resp5 = getRepository(Respuesta).create(respuesta5);
-    const results09 = await getRepository(Respuesta).save(resp5);*/
-    /* ******************************************************************* */
-console.log({    results,
-        results2,
-        results3,
-        results04,
-        results05,
-        results06,
-        results07
-        })
-    return res.json({
+    const results09 = await getRepository(Respuesta).save(resp5);
+
+    console.log({
         results,
         results2,
         results3,
@@ -216,25 +221,37 @@ console.log({    results,
         results05,
         results06,
         results07
-        
+    })
+    return res.json({
+        results,
+        results2,
+        results3,
+        results02,
+        results03,
+        results04,
+        results05,
+        results06,
+        results07,
+        results08,
+        results09
+
     });
 
 }
-
-// GET De un Preguntado //
+// GET(Leer) Todos los preguntados(tematicas) ✅
+export const getPreguntados = async (req: Request, res: Response): Promise<Response> => {
+    const preguntados = await getRepository(Preguntado).find({relations: ['categoria']});
+    return res.json(preguntados);
+}
+// GET De un Preguntado ✅
 export const getPreguntado = async (req: Request, res: Response): Promise<Response> => {
-    const preguntado = await getRepository(Preguntado).findOne(req.params.id);
+     const preguntado = await getRepository(Preguntado).find({where:{id: req.params.id }, 
+        relations: ['categoria']});
+    //const preguntado = await getRepository(Preguntado).findOne(req.params.id);
     return res.json(preguntado);
 }
-// GET pregunta de un temario en especifico //
-
+// GET pregunta de un temario en especifico 💥
 export const getPreguntas = async (req: Request, res: Response): Promise<Response> => {
-    const preguntas = await getRepository(Preguntas).find(
-        //relations: ['preguntado'],
-          //  where:{
-            //    id: req.params.id,
-               //  preguntado: req.params.id 
-            //}
-    );
+    const preguntas = await getRepository(Preguntas).find({relations: ['respuesta']})
     return res.json(preguntas);
 }
