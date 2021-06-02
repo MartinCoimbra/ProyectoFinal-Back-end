@@ -69,6 +69,7 @@ export const getPreguntados = async (req: Request, res: Response): Promise<Respo
     return res.json(preguntados);
 }
 // POST de 1 preguntado (tematica) 
+// Fijarse los Save esta sobreescribiendo los valores //
 export const postPreguntado = async (req: Request, res: Response): Promise<Response> => {
     /* Verificamos los datos de la tabla preguntado */
     if (!req.body.nombre) throw new Exception("Ingrese nombre del preguntado ( nombre )")
@@ -179,17 +180,17 @@ export const postPreguntado = async (req: Request, res: Response): Promise<Respo
     const results07 = await getRepository(Respuesta).save(resp4);
     /* ******************************************************************* */
     /* QUINTA PREGUNTA Y SUS RESPUESTAS */
-    if (!req.body.pregunta5) throw new Exception("Ingrese una pregunta ( pregunta5 )")
+    /*if (!req.body.pregunta5) throw new Exception("Ingrese una pregunta ( pregunta5 )")
     if (!req.body.url_foto_pregunta5) throw new Exception("Ingrese la url_foto_pregunta ( url_foto_pregunta5 )")
     let pregunta5 = new Preguntas()
     pregunta5.preguntas = req.body.pregunta5
     pregunta5.foto_pregunta = req.body.url_foto_pregunta5
     pregunta5.id = results.id
     const preg5 = getRepository(Preguntas).create(pregunta5);
-    const results08 = await getRepository(Preguntas).save(preg5);
+    const results08 = await getRepository(Preguntas).save(preg5);*/
 
     //Posteamos las 3 respuestas de la pregunta//
-    if (!req.body.opcion_correcta5) throw new Exception("Ingrese la respuesta correcta ( opcion_correcta5 )")
+    /*if (!req.body.opcion_correcta5) throw new Exception("Ingrese la respuesta correcta ( opcion_correcta5 )")
     if (!req.body.opcion_b5) throw new Exception("Ingrese una respuesta incorrecta ( opcion_b5 )")
     if (!req.body.opcion_c5) throw new Exception("Ingrese otra respuesta incorrecta ( opcion_c5 )")
     let respuesta5 = new Respuesta()
@@ -197,10 +198,26 @@ export const postPreguntado = async (req: Request, res: Response): Promise<Respo
     respuesta5.opcion_b = req.body.opcion_b5
     respuesta5.opcion_c = req.body.opcion_c5
     const resp5 = getRepository(Respuesta).create(respuesta5);
-    const results09 = await getRepository(Respuesta).save(resp5);
+    const results09 = await getRepository(Respuesta).save(resp5);*/
     /* ******************************************************************* */
-
-    return res.json(results);
+console.log({    results,
+        results2,
+        results3,
+        results04,
+        results05,
+        results06,
+        results07
+        })
+    return res.json({
+        results,
+        results2,
+        results3,
+        results04,
+        results05,
+        results06,
+        results07
+        
+    });
 
 }
 
@@ -208,4 +225,16 @@ export const postPreguntado = async (req: Request, res: Response): Promise<Respo
 export const getPreguntado = async (req: Request, res: Response): Promise<Response> => {
     const preguntado = await getRepository(Preguntado).findOne(req.params.id);
     return res.json(preguntado);
+}
+// GET pregunta de un temario en especifico //
+
+export const getPreguntas = async (req: Request, res: Response): Promise<Response> => {
+    const preguntas = await getRepository(Preguntas).find(
+        //relations: ['preguntado'],
+          //  where:{
+            //    id: req.params.id,
+               //  preguntado: req.params.id 
+            //}
+    );
+    return res.json(preguntas);
 }

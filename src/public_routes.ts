@@ -17,6 +17,19 @@ router.get('/preguntado/:id', safe(actions.getPreguntado));
 
 // Metodo get para ver un preguntado en especifico//
 
+router.get('/preguntas', safe(actions.getPreguntas))
+
+
+
+
+
+
+
+
+
+
+
+
 // Metodo get para ver preguntado de un metodo especifico//
 
 export default router;
