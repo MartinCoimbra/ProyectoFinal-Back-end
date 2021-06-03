@@ -8,6 +8,7 @@ import { width, height } from 'styled-system'
 import { Preguntado } from './entities/Preguntado'
 import { Preguntas } from './entities/Preguntas'
 import { Respuesta } from './entities/Respuesta'
+import { findSourceMap } from 'module'
 
 /* POST user ✅*/
 export const createUser = async (req: Request, res: Response): Promise<Response> => {
@@ -246,4 +247,11 @@ export const getPreguntas = async (req: Request, res: Response): Promise<Respons
 export const getRespuestas = async (req: Request, res: Response): Promise<Response> => {
     const Respuestas = await getRepository(Respuesta).find({ relations: ['pregunta'] })
     return res.json(Respuestas);
+}
+// Metodo Get segun el ID del Preguntado (tematica) nos trae las preguntas y las respuestas del mismo  ✅
+// Esto lo podemos utilizar cuando vallamos a jugar, al seleccionar uno lo guardamos en un array y verificamos con programacion si acerto la pregunta // 
+// Si acerto la pregunta se le sumaran puntos de lo contrario se le restaran // 
+export const getPreguntas_Respuestas_Preguntado = async (req: Request, res: Response): Promise<Response> => {
+    const pregunta = await getRepository(Preguntas).find({where: {preguntados: req.params.id}, relations: ['respuesta', 'preguntado'] })
+    return res.json(pregunta);
 }

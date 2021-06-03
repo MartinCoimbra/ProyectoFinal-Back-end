@@ -39,7 +39,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 exports.__esModule = true;
-exports.getRespuestas = exports.getPreguntas = exports.getPreguntado = exports.getPreguntados = exports.postPreguntado = exports.getCategoria = exports.getCategorias = exports.postCategoria = exports.login = exports.getUser = exports.createUser = void 0;
+exports.getPreguntas_Respuestas_Preguntado = exports.getRespuestas = exports.getPreguntas = exports.getPreguntado = exports.getPreguntados = exports.postPreguntado = exports.getCategoria = exports.getCategorias = exports.postCategoria = exports.login = exports.getUser = exports.createUser = void 0;
 var typeorm_1 = require("typeorm");
 var Usuario_1 = require("./entities/Usuario");
 var utils_1 = require("./utils");
@@ -405,3 +405,18 @@ var getRespuestas = function (req, res) { return __awaiter(void 0, void 0, void 
     });
 }); };
 exports.getRespuestas = getRespuestas;
+// Metodo Get segun el ID del Preguntado (tematica) nos trae las preguntas y las respuestas del mismo  ✅
+// Esto lo podemos utilizar cuando vallamos a jugar, al seleccionar uno lo guardamos en un array y verificamos con programacion si acerto la pregunta // 
+// Si acerto la pregunta se le sumaran puntos de lo contrario se le restaran // 
+var getPreguntas_Respuestas_Preguntado = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var pregunta;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, typeorm_1.getRepository(Preguntas_1.Preguntas).find({ where: { preguntados: req.params.id }, relations: ['respuesta', 'preguntado'] })];
+            case 1:
+                pregunta = _a.sent();
+                return [2 /*return*/, res.json(pregunta)];
+        }
+    });
+}); };
+exports.getPreguntas_Respuestas_Preguntado = getPreguntas_Respuestas_Preguntado;

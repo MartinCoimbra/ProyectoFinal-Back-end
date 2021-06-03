@@ -27,6 +27,7 @@ router.post('/categoria', verifyToken, safe(actions.postCategoria));
 /* POST PREGUNTADO ✅*/
 router.post('/preguntado', verifyToken, safe(actions.postPreguntado));
 
+
 // GET a todas las preguntas✅ (no es necesario, necesitamos la especifica por id)
 router.get('/preguntas',verifyToken, safe(actions.getPreguntas))
 
@@ -35,6 +36,11 @@ router.get('/preguntas',verifyToken, safe(actions.getPreguntas))
 
 // Hay que hacer que esta funcion de respuesta sea especifica pa el preguntado que eliga!! (revisar la respuesta que dio el archivo ) 🛑 
 router.get('/respuestas',verifyToken, safe(actions.getRespuestas));
+
+
+// Obejtivo, que nos traiga las respuestas y preguntas que corresponden a ese preguntado //
+
+router.get('/preguntado/:id', verifyToken, safe(actions.getPreguntas_Respuestas_Preguntado));
 
 
 
