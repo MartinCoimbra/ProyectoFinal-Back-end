@@ -24,7 +24,7 @@ export class Preguntado extends BaseEntity {
     url_foto: string;
 
     @OneToMany(() => Comentario, comentario => comentario.preguntado)
-    comentario: Comentario;
+    comentario: Comentario[];
 
     @ManyToOne(() => Categoria, categoria => categoria.preguntado)
     categoria: Categoria;
@@ -32,8 +32,7 @@ export class Preguntado extends BaseEntity {
     @OneToMany(() => Preguntas, preguntas => preguntas.preguntado, {
         cascade: true,
     })
-
-    preguntas: Preguntas
+    preguntas: Preguntas[]
 
 
 

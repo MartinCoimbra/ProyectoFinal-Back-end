@@ -10,16 +10,16 @@ router.post('/login', safe(actions.login));
 router.get('/categorias', safe(actions.getCategorias));
 //GET una categoria ✅
 router.get('/categoria/:id', safe(actions.getCategoria));
-
-// Preguntados ❔
+// Preguntados ✅
 router.get('/preguntados', safe(actions.getPreguntados));
-
-// Preguntado ❔
+// Preguntado especifico ✅
 router.get('/preguntado/:id', safe(actions.getPreguntado));
 
+// Preguntados por categoria 💥
+/* router.get('/preguntados/categoria/:id', safe(actions.getPreguntadosPorCategoria)); */
 
-// Metodo get para ver un preguntas en especifico ❔
-router.get('/preguntas', safe(actions.getPreguntas))
+
+
 
 
 

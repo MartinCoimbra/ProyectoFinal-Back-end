@@ -21,6 +21,9 @@ export class Respuesta extends BaseEntity {
     opcion_c: string;
 
     @ManyToOne(() => Preguntas, preguntas => preguntas.respuesta)
-    @JoinColumn()
+    @JoinColumn({name:'preguntas'})
     pregunta: Preguntas
+
+    @Column({type:'int',nullable: true})
+    preguntas:number;
 }

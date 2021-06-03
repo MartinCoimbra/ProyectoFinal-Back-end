@@ -31,11 +31,11 @@ router.post('/login', utils_1.safe(actions.login));
 router.get('/categorias', utils_1.safe(actions.getCategorias));
 //GET una categoria ✅
 router.get('/categoria/:id', utils_1.safe(actions.getCategoria));
-// Preguntados ❔
+// Preguntados ✅
 router.get('/preguntados', utils_1.safe(actions.getPreguntados));
-// Preguntado ❔
+// Preguntado especifico ✅
 router.get('/preguntado/:id', utils_1.safe(actions.getPreguntado));
-// Metodo get para ver un preguntas en especifico ❔
-router.get('/preguntas', utils_1.safe(actions.getPreguntas));
+// Preguntados por categoria 💥
+/* router.get('/preguntados/categoria/:id', safe(actions.getPreguntadosPorCategoria)); */
 // Metodo get para ver preguntado de un metodo especifico//
 exports["default"] = router;
