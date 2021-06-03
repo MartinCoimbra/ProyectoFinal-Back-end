@@ -57,6 +57,8 @@ router.get('/preguntas', verifyToken, utils_1.safe(actions.getPreguntas));
 /* Metodo get para ver un preguntas en especifico */
 // Hay que hacer que esta funcion de respuesta sea especifica pa el preguntado que eliga!! (revisar la respuesta que dio el archivo ) 🛑 
 router.get('/respuestas', verifyToken, utils_1.safe(actions.getRespuestas));
+// Obejtivo, que nos traiga las respuestas y preguntas que corresponden a ese preguntado //
+router.get('/preguntadooo/:id', verifyToken, utils_1.safe(actions.getPreguntas_Respuestas_Preguntado));
 // Nota poner metodo GET para preguntas en especifica //
 // Metodo Get para las respuestas especificas //
 exports["default"] = router;

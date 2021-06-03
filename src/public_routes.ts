@@ -13,7 +13,7 @@ router.get('/categoria/:id', safe(actions.getCategoria));
 // Preguntados ✅
 router.get('/preguntados', safe(actions.getPreguntados));
 // Preguntado especifico ✅
-router.get('/preguntado/:id', safe(actions.getPreguntado));
+router.get('/preguntadoE/:id', safe(actions.getPreguntado));
 
 // Preguntados por categoria 💥
 /* router.get('/preguntados/categoria/:id', safe(actions.getPreguntadosPorCategoria)); */
