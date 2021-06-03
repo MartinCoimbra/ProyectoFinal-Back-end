@@ -9,6 +9,7 @@ import { Preguntado } from './entities/Preguntado'
 import { Preguntas } from './entities/Preguntas'
 import { Respuesta } from './entities/Respuesta'
 import { findSourceMap } from 'module'
+import { Comentario } from './entities/Comentario'
 
 /* POST user ✅*/
 export const createUser = async (req: Request, res: Response): Promise<Response> => {
@@ -252,6 +253,45 @@ export const getRespuestas = async (req: Request, res: Response): Promise<Respon
 // Esto lo podemos utilizar cuando vallamos a jugar, al seleccionar uno lo guardamos en un array y verificamos con programacion si acerto la pregunta // 
 // Si acerto la pregunta se le sumaran puntos de lo contrario se le restaran // 
 export const getPreguntas_Respuestas_Preguntado = async (req: Request, res: Response): Promise<Response> => {
-    const pregunta = await getRepository(Preguntas).find({where: {preguntados: req.params.id}, relations: ['respuesta', 'preguntado'] })
+    const pregunta = await getRepository(Preguntas).find(
+        { where: { preguntados: req.params.id }, 
+        relations: ['respuesta', 'preguntado'] })
     return res.json(pregunta);
 }
+
+export const postComentario = async (req: Request, res: Response): Promise<Response> => {
+    /* Usuario actual */
+    const userID = (req.user as ObjectLiteral).user.id
+    /* IDENTIFICAMOS AL PREGUNTADO CON EL  = req.params.id */
+    if (!req.body.comentario) throw new Exception("Ingrese un comentario ( comentario )")
+    if (!req.body.calificacion) throw new Exception("Ingrese la calificacion del 1 al 5 ( calificacion )")
+
+    let comentario = new Comentario()
+    comentario.usuario = userID
+    comentario.preguntados = parseInt(req.params.id)
+    comentario.comentario = req.body.comentario
+    comentario.calificacion = req.body.calificacion
+    console.log(comentario)
+
+    const newComent = getRepository(Comentario).create(comentario)
+    const results = await getRepository(Comentario).save(newComent)
+
+    return res.json(results);
+}
+/*  GET A TODOS LOS COMENTARIOS de 1 preguntado /preguntado/:id/comentario ✅*/
+export const getComentariosDeUnPreguntado = async (req: Request, res: Response): Promise<Response> => {
+    const comentarios = await getRepository(Comentario).find(
+        { where: { preguntados: parseInt(req.params.id) },
+        relations: ['preguntado', 'usuario']  })
+    return res.json(comentarios);
+}
+/*  GET A todos los preguntados perteneciente a una categoria✅ */
+export const getPreguntadosPorCategoria = async (req: Request, res: Response): Promise<Response> => {
+      const preguntado = await getRepository(Preguntado).find({
+        where: { categoria: req.params.id },
+        relations: ['categoria']
+    });
+    return res.json(preguntado);
+}
+
+

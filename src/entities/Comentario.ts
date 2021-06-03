@@ -10,7 +10,7 @@ import { Preguntado } from './Preguntado';
 export class Comentario extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number;
-    
+
     @Column()
     comentario: string;
 
@@ -22,8 +22,11 @@ export class Comentario extends BaseEntity {
     usuario: Usuario;
 
     @ManyToOne(() => Preguntado, preguntado => preguntado.comentario)
-    @JoinColumn()
+    @JoinColumn({ name: 'preguntados' })
     preguntado: Preguntado;
+
+    @Column({ type:'int', nullable: true })
+    preguntados: number;
 
 
 }

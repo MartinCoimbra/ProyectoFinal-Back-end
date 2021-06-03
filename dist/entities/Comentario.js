@@ -52,9 +52,13 @@ var Comentario = /** @class */ (function (_super) {
     ], Comentario.prototype, "usuario");
     __decorate([
         typeorm_1.ManyToOne(function () { return Preguntado_1.Preguntado; }, function (preguntado) { return preguntado.comentario; }),
-        typeorm_1.JoinColumn(),
+        typeorm_1.JoinColumn({ name: 'preguntados' }),
         __metadata("design:type", Preguntado_1.Preguntado)
     ], Comentario.prototype, "preguntado");
+    __decorate([
+        typeorm_1.Column({ type: 'int', nullable: true }),
+        __metadata("design:type", Number)
+    ], Comentario.prototype, "preguntados");
     Comentario = __decorate([
         typeorm_1.Entity()
     ], Comentario);
