@@ -14,24 +14,10 @@ router.get('/categoria/:id', safe(actions.getCategoria));
 router.get('/preguntados', safe(actions.getPreguntados));
 // Preguntado especifico ✅
 router.get('/preguntadoE/:id', safe(actions.getPreguntado));
+// Preguntados por categoria ✅
+router.get('/preguntados/categoria/:id', safe(actions.getPreguntadosPorCategoria));
+/* Metodo get TODOS los comentrios que pertenescan a una tematica ✅ */
+router.get('/preguntado/:id/comentario', safe(actions.getComentariosDeUnPreguntado));
 
-// Preguntados por categoria 💥
-/* router.get('/preguntados/categoria/:id', safe(actions.getPreguntadosPorCategoria)); */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// Metodo get para ver preguntado de un metodo especifico//
 
 export default router;

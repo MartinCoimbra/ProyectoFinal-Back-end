@@ -51,14 +51,13 @@ router.get('/user', verifyToken, utils_1.safe(actions.getUser));
 router.post('/categoria', verifyToken, utils_1.safe(actions.postCategoria));
 /* POST PREGUNTADO ✅*/
 router.post('/preguntado', verifyToken, utils_1.safe(actions.postPreguntado));
-// GET a todas las preguntas✅ (no es necesario, necesitamos la especifica por id)
+/* POST comentamos el preguntado que quieramos (poniendo el id del preguntado) ✅*/
+router.post('/preguntado/:id/comentario', verifyToken, utils_1.safe(actions.postComentario));
+// GET nos trae las preguntas y respuestas del mismo preguntado✅// 
+router.get('/preguntado/:id', verifyToken, utils_1.safe(actions.getPreguntas_Respuestas_Preguntado));
+/* NO SON NECESARIAS LAS RUTAS DE ABAJO. */
+// GET a todas las preguntas✅ (no es necesario, necesitamos la especifica por id) 🛑
 router.get('/preguntas', verifyToken, utils_1.safe(actions.getPreguntas));
-// Metodo Get a las Preguntas 🛑 DE UN PREGUNTADO 🛑 en especifico /pregunta/:id //
-/* Metodo get para ver un preguntas en especifico */
 // Hay que hacer que esta funcion de respuesta sea especifica pa el preguntado que eliga!! (revisar la respuesta que dio el archivo ) 🛑 
 router.get('/respuestas', verifyToken, utils_1.safe(actions.getRespuestas));
-// Obejtivo, que nos traiga las respuestas y preguntas que corresponden a ese preguntado //
-router.get('/preguntadooo/:id', verifyToken, utils_1.safe(actions.getPreguntas_Respuestas_Preguntado));
-// Nota poner metodo GET para preguntas en especifica //
-// Metodo Get para las respuestas especificas //
 exports["default"] = router;

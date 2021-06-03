@@ -39,7 +39,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 exports.__esModule = true;
-exports.getPreguntas_Respuestas_Preguntado = exports.getRespuestas = exports.getPreguntas = exports.getPreguntado = exports.getPreguntados = exports.postPreguntado = exports.getCategoria = exports.getCategorias = exports.postCategoria = exports.login = exports.getUser = exports.createUser = void 0;
+exports.getPreguntadosPorCategoria = exports.getComentariosDeUnPreguntado = exports.postComentario = exports.getPreguntas_Respuestas_Preguntado = exports.getRespuestas = exports.getPreguntas = exports.getPreguntado = exports.getPreguntados = exports.postPreguntado = exports.getCategoria = exports.getCategorias = exports.postCategoria = exports.login = exports.getUser = exports.createUser = void 0;
 var typeorm_1 = require("typeorm");
 var Usuario_1 = require("./entities/Usuario");
 var utils_1 = require("./utils");
@@ -48,6 +48,7 @@ var Categoria_1 = require("./entities/Categoria");
 var Preguntado_1 = require("./entities/Preguntado");
 var Preguntas_1 = require("./entities/Preguntas");
 var Respuesta_1 = require("./entities/Respuesta");
+var Comentario_1 = require("./entities/Comentario");
 /* POST user ✅*/
 var createUser = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var user, newUser, results;
@@ -412,7 +413,8 @@ var getPreguntas_Respuestas_Preguntado = function (req, res) { return __awaiter(
     var pregunta;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, typeorm_1.getRepository(Preguntas_1.Preguntas).find({ where: { preguntados: req.params.id }, relations: ['respuesta', 'preguntado'] })];
+            case 0: return [4 /*yield*/, typeorm_1.getRepository(Preguntas_1.Preguntas).find({ where: { preguntados: req.params.id },
+                    relations: ['respuesta', 'preguntado'] })];
             case 1:
                 pregunta = _a.sent();
                 return [2 /*return*/, res.json(pregunta)];
@@ -420,3 +422,59 @@ var getPreguntas_Respuestas_Preguntado = function (req, res) { return __awaiter(
     });
 }); };
 exports.getPreguntas_Respuestas_Preguntado = getPreguntas_Respuestas_Preguntado;
+var postComentario = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var userID, comentario, newComent, results;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                userID = req.user.user.id;
+                /* IDENTIFICAMOS AL PREGUNTADO CON EL  = req.params.id */
+                if (!req.body.comentario)
+                    throw new utils_1.Exception("Ingrese un comentario ( comentario )");
+                if (!req.body.calificacion)
+                    throw new utils_1.Exception("Ingrese la calificacion del 1 al 5 ( calificacion )");
+                comentario = new Comentario_1.Comentario();
+                comentario.usuario = userID;
+                comentario.preguntados = parseInt(req.params.id);
+                comentario.comentario = req.body.comentario;
+                comentario.calificacion = req.body.calificacion;
+                console.log(comentario);
+                newComent = typeorm_1.getRepository(Comentario_1.Comentario).create(comentario);
+                return [4 /*yield*/, typeorm_1.getRepository(Comentario_1.Comentario).save(newComent)];
+            case 1:
+                results = _a.sent();
+                return [2 /*return*/, res.json(results)];
+        }
+    });
+}); };
+exports.postComentario = postComentario;
+/*  GET A TODOS LOS COMENTARIOS de 1 preguntado /preguntado/:id/comentario ✅*/
+var getComentariosDeUnPreguntado = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var comentarios;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, typeorm_1.getRepository(Comentario_1.Comentario).find({ where: { preguntados: parseInt(req.params.id) },
+                    relations: ['preguntado', 'usuario'] })];
+            case 1:
+                comentarios = _a.sent();
+                return [2 /*return*/, res.json(comentarios)];
+        }
+    });
+}); };
+exports.getComentariosDeUnPreguntado = getComentariosDeUnPreguntado;
+/*  GET A todos los preguntados perteneciente a una categoria✅ */
+var getPreguntadosPorCategoria = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var preguntado;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, typeorm_1.getRepository(Preguntado_1.Preguntado).find({
+                    where: { categoria: req.params.id },
+                    relations: ['categoria']
+                })];
+            case 1:
+                preguntado = _a.sent();
+                return [2 /*return*/, res.json(preguntado)];
+        }
+    });
+}); };
+exports.getPreguntadosPorCategoria = getPreguntadosPorCategoria;
