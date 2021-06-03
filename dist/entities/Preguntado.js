@@ -56,15 +56,17 @@ var Preguntado = /** @class */ (function (_super) {
     ], Preguntado.prototype, "url_foto");
     __decorate([
         typeorm_1.OneToMany(function () { return Comentario_1.Comentario; }, function (comentario) { return comentario.preguntado; }),
-        __metadata("design:type", Comentario_1.Comentario)
+        __metadata("design:type", Array)
     ], Preguntado.prototype, "comentario");
     __decorate([
         typeorm_1.ManyToOne(function () { return Categoria_1.Categoria; }, function (categoria) { return categoria.preguntado; }),
         __metadata("design:type", Categoria_1.Categoria)
     ], Preguntado.prototype, "categoria");
     __decorate([
-        typeorm_1.OneToMany(function () { return Preguntas_1.Preguntas; }, function (preguntas) { return preguntas.preguntado; }),
-        __metadata("design:type", Preguntas_1.Preguntas)
+        typeorm_1.OneToMany(function () { return Preguntas_1.Preguntas; }, function (preguntas) { return preguntas.preguntado; }, {
+            cascade: true
+        }),
+        __metadata("design:type", Array)
     ], Preguntado.prototype, "preguntas");
     Preguntado = __decorate([
         typeorm_1.Entity()

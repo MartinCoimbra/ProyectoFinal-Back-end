@@ -1,6 +1,6 @@
 import {
     Entity, Column, PrimaryGeneratedColumn, ManyToMany,
-    BaseEntity, JoinTable, OneToMany, OneToOne, ManyToOne
+    BaseEntity, JoinTable, OneToMany, OneToOne, ManyToOne, JoinColumn
 } from 'typeorm';
 import { Preguntas } from "./Preguntas"
 
@@ -21,5 +21,9 @@ export class Respuesta extends BaseEntity {
     opcion_c: string;
 
     @ManyToOne(() => Preguntas, preguntas => preguntas.respuesta)
+    @JoinColumn({name:'preguntas'})
     pregunta: Preguntas
+
+    @Column({type:'int',nullable: true})
+    preguntas:number;
 }

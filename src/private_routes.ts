@@ -20,19 +20,21 @@ const verifyToken= (req: Request,res:Response, next:NextFunction) =>{
     }
   
 }
-// get usuario actual
+// get usuario actual ✅
 router.get('/user',verifyToken, safe(actions.getUser));
-
-//post de categoria
+//post de categoria ✅
 router.post('/categoria', verifyToken, safe(actions.postCategoria));
-
-/* PREGUNTADOS - TEMATICAS */
-/* POST privado */
+/* POST PREGUNTADO ✅*/
 router.post('/preguntado', verifyToken, safe(actions.postPreguntado));
-// Metodo Get a las Preguntas de un preguntado en especifico //
 
+// GET a todas las preguntas✅ (no es necesario, necesitamos la especifica por id)
+router.get('/preguntas',verifyToken, safe(actions.getPreguntas))
 
+// Metodo Get a las Preguntas 🛑 DE UN PREGUNTADO 🛑 en especifico /pregunta/:id //
+/* Metodo get para ver un preguntas en especifico */
 
+// Hay que hacer que esta funcion de respuesta sea especifica pa el preguntado que eliga!! (revisar la respuesta que dio el archivo ) 🛑 
+router.get('/respuestas',verifyToken, safe(actions.getRespuestas));
 
 
 

@@ -18,10 +18,15 @@ export class Preguntas extends BaseEntity {
     foto_pregunta: string;
 
     @ManyToOne(() => Preguntado, preguntado => preguntado.preguntas)
+    @JoinColumn({name:'preguntados'})
     preguntado: Preguntado
 
-    @OneToMany(() => Respuesta, respuesta => respuesta.pregunta)
-    @JoinColumn()
-    respuesta: Respuesta
+    @Column({type:'int',nullable: true})
+    preguntados:number;
+
+    @OneToMany(() => Respuesta, respuesta => respuesta.pregunta, {
+        cascade: true,
+    })
+    respuesta: Respuesta[]
 
 }

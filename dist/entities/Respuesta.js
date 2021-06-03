@@ -50,8 +50,13 @@ var Respuesta = /** @class */ (function (_super) {
     ], Respuesta.prototype, "opcion_c");
     __decorate([
         typeorm_1.ManyToOne(function () { return Preguntas_1.Preguntas; }, function (preguntas) { return preguntas.respuesta; }),
+        typeorm_1.JoinColumn({ name: 'preguntas' }),
         __metadata("design:type", Preguntas_1.Preguntas)
     ], Respuesta.prototype, "pregunta");
+    __decorate([
+        typeorm_1.Column({ type: 'int', nullable: true }),
+        __metadata("design:type", Number)
+    ], Respuesta.prototype, "preguntas");
     Respuesta = __decorate([
         typeorm_1.Entity()
     ], Respuesta);
