@@ -39,7 +39,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 exports.__esModule = true;
-exports.getPreguntadosPorCategoria = exports.getComentariosDeUnPreguntado = exports.postComentario = exports.getPreguntas_Respuestas_Preguntado = exports.getRespuestas = exports.getPreguntas = exports.getPreguntado = exports.getPreguntados = exports.postPreguntado = exports.getCategoria = exports.getCategorias = exports.postCategoria = exports.login = exports.getUser = exports.createUser = void 0;
+exports.putDatos = exports.getPreguntadosPorCategoria = exports.getComentariosDeUnPreguntado = exports.postComentario = exports.getPreguntas_Respuestas_Preguntado = exports.getRespuestas = exports.getPreguntas = exports.getPreguntado = exports.getPreguntados = exports.postPreguntado = exports.getCategoria = exports.getCategorias = exports.postCategoria = exports.login = exports.getUser = exports.createUser = void 0;
 var typeorm_1 = require("typeorm");
 var Usuario_1 = require("./entities/Usuario");
 var utils_1 = require("./utils");
@@ -65,6 +65,8 @@ var createUser = function (req, res) { return __awaiter(void 0, void 0, void 0, 
                     throw new utils_1.Exception("coloque el email por favor ( email )");
                 if (!req.body.password)
                     throw new utils_1.Exception("coloque una contraseña por favor ( password )");
+                if (!req.body.descripcion)
+                    throw new utils_1.Exception("coloque una descripción (newdatos)");
                 return [4 /*yield*/, typeorm_1.getRepository(Usuario_1.Usuario).findOne({ where: { email: req.body.email } })];
             case 1:
                 user = _a.sent();
@@ -478,3 +480,24 @@ var getPreguntadosPorCategoria = function (req, res) { return __awaiter(void 0, 
     });
 }); };
 exports.getPreguntadosPorCategoria = getPreguntadosPorCategoria;
+/* PUT (UPDATE) datos */
+var putDatos = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var userID, dato, newdatos, results;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                userID = req.user.user;
+                return [4 /*yield*/, typeorm_1.getRepository(Usuario_1.Usuario).findOne(userID)];
+            case 1:
+                dato = _a.sent();
+                if (!dato) return [3 /*break*/, 3];
+                newdatos = typeorm_1.getRepository(Usuario_1.Usuario).merge(dato, req.body);
+                return [4 /*yield*/, typeorm_1.getRepository(Usuario_1.Usuario).save(newdatos)];
+            case 2:
+                results = _a.sent();
+                return [2 /*return*/, res.json(results)];
+            case 3: return [2 /*return*/, res.json({ msg: "Error 504" })];
+        }
+    });
+}); };
+exports.putDatos = putDatos;

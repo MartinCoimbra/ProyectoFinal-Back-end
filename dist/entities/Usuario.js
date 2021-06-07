@@ -62,6 +62,10 @@ var Usuario = /** @class */ (function (_super) {
         __metadata("design:type", Number)
     ], Usuario.prototype, "puntos");
     __decorate([
+        typeorm_1.Column(),
+        __metadata("design:type", String)
+    ], Usuario.prototype, "descripcion");
+    __decorate([
         typeorm_1.OneToOne(function () { return Coins_1.Coins; }, function (coins) { return coins.usuario; }),
         __metadata("design:type", Coins_1.Coins)
     ], Usuario.prototype, "coins");
