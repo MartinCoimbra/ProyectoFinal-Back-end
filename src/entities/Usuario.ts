@@ -33,6 +33,9 @@ export class Usuario extends BaseEntity {
     @Column()
     descripcion: string;
 
+    @Column()
+    urlfoto: string;
+
     @OneToOne(() => Coins, coins => coins.usuario)
     coins: Coins;
 
