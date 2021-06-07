@@ -19,6 +19,7 @@ export const createUser = async (req: Request, res: Response): Promise<Response>
     if (!req.body.last_name) throw new Exception("coloque el apellido por favor ( last_name )")
     if (!req.body.email) throw new Exception("coloque el email por favor ( email )")
     if (!req.body.password) throw new Exception("coloque una contraseña por favor ( password )")
+    if (!req.body.descripcion) throw new Exception("coloque una descripción (newdatos)")
 
     const user = await getRepository(Usuario).findOne({ where: { email: req.body.email } })
     if (user) throw new Exception("ya hay un usuario con este email")
@@ -294,4 +295,14 @@ export const getPreguntadosPorCategoria = async (req: Request, res: Response): P
     return res.json(preguntado);
 }
 
-
+/* PUT (UPDATE) datos */
+export const putDatos = async (req: Request, res: Response): Promise<Response> =>{
+    const userID = (req.user as ObjectLiteral).user    
+    const dato = await getRepository(Usuario).findOne(userID);
+        if(dato){
+            const newdatos = getRepository(Usuario).merge(dato, req.body); 
+            const results = await getRepository(Usuario).save(newdatos)
+            return res.json(results);
+        }
+        return res.json({msg: "Error 504"})
+}

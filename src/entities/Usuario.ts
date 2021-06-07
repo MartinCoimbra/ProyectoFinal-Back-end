@@ -30,6 +30,9 @@ export class Usuario extends BaseEntity {
     @Column({default:0})
     puntos: number;
 
+    @Column()
+    descripcion: string;
+
     @OneToOne(() => Coins, coins => coins.usuario)
     coins: Coins;
 

@@ -60,4 +60,6 @@ router.get('/preguntado/:id', verifyToken, utils_1.safe(actions.getPreguntas_Res
 router.get('/preguntas', verifyToken, utils_1.safe(actions.getPreguntas));
 // Hay que hacer que esta funcion de respuesta sea especifica pa el preguntado que eliga!! (revisar la respuesta que dio el archivo ) 🛑 
 router.get('/respuestas', verifyToken, utils_1.safe(actions.getRespuestas));
+// Editar los datos del usuario //
+router.put('/editardatos', verifyToken, utils_1.safe(actions.putDatos));
 exports["default"] = router;
