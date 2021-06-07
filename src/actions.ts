@@ -19,7 +19,8 @@ export const createUser = async (req: Request, res: Response): Promise<Response>
     if (!req.body.last_name) throw new Exception("coloque el apellido por favor ( last_name )")
     if (!req.body.email) throw new Exception("coloque el email por favor ( email )")
     if (!req.body.password) throw new Exception("coloque una contraseña por favor ( password )")
-    if (!req.body.descripcion) throw new Exception("coloque una descripción (newdatos)")
+    if (!req.body.descripcion) throw new Exception("coloque una descripción (descripcion)")
+    if (!req.body.urlfoto) throw new Exception("coloque una foto (urlfoto)")
 
     const user = await getRepository(Usuario).findOne({ where: { email: req.body.email } })
     if (user) throw new Exception("ya hay un usuario con este email")

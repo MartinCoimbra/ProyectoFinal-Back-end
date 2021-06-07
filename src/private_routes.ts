@@ -40,4 +40,5 @@ router.get('/respuestas',verifyToken, safe(actions.getRespuestas));
 // Editar los datos del usuario //
 router.put('/editardatos',verifyToken, safe(actions.putDatos));
 
+
 export default router;
