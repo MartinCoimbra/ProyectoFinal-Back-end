@@ -39,7 +39,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 exports.__esModule = true;
-exports.putDatos = exports.getPreguntadosPorCategoria = exports.getComentariosDeUnPreguntado = exports.postComentario = exports.getPreguntas_Respuestas_Preguntado = exports.getRespuestas = exports.getPreguntas = exports.getPreguntado = exports.getPreguntados = exports.postPreguntado = exports.getCategoria = exports.getCategorias = exports.postCategoria = exports.login = exports.getUser = exports.createUser = void 0;
+exports.getTop = exports.putCoin = exports.getCoin = exports.postCoin = exports.putDatos = exports.getPreguntadosPorCategoria = exports.getComentariosDeUnPreguntado = exports.postComentario = exports.getPreguntas_Respuestas_Preguntado = exports.getRespuestas = exports.getPreguntas = exports.getPreguntado = exports.getPreguntados = exports.postPreguntado = exports.getCategoria = exports.getCategorias = exports.postCategoria = exports.login = exports.getUser = exports.createUser = void 0;
 var typeorm_1 = require("typeorm");
 var Usuario_1 = require("./entities/Usuario");
 var utils_1 = require("./utils");
@@ -49,6 +49,7 @@ var Preguntado_1 = require("./entities/Preguntado");
 var Preguntas_1 = require("./entities/Preguntas");
 var Respuesta_1 = require("./entities/Respuesta");
 var Comentario_1 = require("./entities/Comentario");
+var Coins_1 = require("./entities/Coins");
 /* POST user ✅*/
 var createUser = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var user, newUser, results;
@@ -66,7 +67,9 @@ var createUser = function (req, res) { return __awaiter(void 0, void 0, void 0, 
                 if (!req.body.password)
                     throw new utils_1.Exception("coloque una contraseña por favor ( password )");
                 if (!req.body.descripcion)
-                    throw new utils_1.Exception("coloque una descripción (newdatos)");
+                    throw new utils_1.Exception("coloque una descripción (descripcion)");
+                if (!req.body.urlfoto)
+                    throw new utils_1.Exception("coloque una foto (urlfoto)");
                 return [4 /*yield*/, typeorm_1.getRepository(Usuario_1.Usuario).findOne({ where: { email: req.body.email } })];
             case 1:
                 user = _a.sent();
@@ -415,8 +418,10 @@ var getPreguntas_Respuestas_Preguntado = function (req, res) { return __awaiter(
     var pregunta;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, typeorm_1.getRepository(Preguntas_1.Preguntas).find({ where: { preguntados: req.params.id },
-                    relations: ['respuesta', 'preguntado'] })];
+            case 0: return [4 /*yield*/, typeorm_1.getRepository(Preguntas_1.Preguntas).find({
+                    where: { preguntados: req.params.id },
+                    relations: ['respuesta', 'preguntado']
+                })];
             case 1:
                 pregunta = _a.sent();
                 return [2 /*return*/, res.json(pregunta)];
@@ -455,8 +460,10 @@ var getComentariosDeUnPreguntado = function (req, res) { return __awaiter(void 0
     var comentarios;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, typeorm_1.getRepository(Comentario_1.Comentario).find({ where: { preguntados: parseInt(req.params.id) },
-                    relations: ['preguntado', 'usuario'] })];
+            case 0: return [4 /*yield*/, typeorm_1.getRepository(Comentario_1.Comentario).find({
+                    where: { preguntados: parseInt(req.params.id) },
+                    relations: ['preguntado', 'usuario']
+                })];
             case 1:
                 comentarios = _a.sent();
                 return [2 /*return*/, res.json(comentarios)];
@@ -501,3 +508,82 @@ var putDatos = function (req, res) { return __awaiter(void 0, void 0, void 0, fu
     });
 }); };
 exports.putDatos = putDatos;
+var postCoin = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var userID, coin, coinuser, resultsCoin;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                userID = req.user.user.id;
+                coin = new Coins_1.Coins();
+                coin.usuario = userID;
+                coinuser = typeorm_1.getRepository(Coins_1.Coins).create(coin);
+                return [4 /*yield*/, typeorm_1.getRepository(Coins_1.Coins).save(coinuser)];
+            case 1:
+                resultsCoin = _a.sent();
+                return [2 /*return*/, res.json(resultsCoin)];
+        }
+    });
+}); };
+exports.postCoin = postCoin;
+/* GET coin del user logiado */
+var getCoin = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var userID, datosCoin;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                userID = req.user.user.id;
+                return [4 /*yield*/, typeorm_1.getRepository(Coins_1.Coins).find({
+                        where: { usuario: userID },
+                        relations: ['usuario']
+                    })];
+            case 1:
+                datosCoin = _a.sent();
+                return [2 /*return*/, res.json(datosCoin)];
+        }
+    });
+}); };
+exports.getCoin = getCoin;
+/* GET coin del user logiado */
+var putCoin = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var userID, datosCoin, newCoin, results;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                if (!req.body.coins)
+                    throw new utils_1.Exception("No hay coin para editar ( coins )");
+                userID = req.user.user.id;
+                return [4 /*yield*/, typeorm_1.getRepository(Coins_1.Coins).findOne({ where: { usuario: userID } })
+                    /* por el body tomaremos el nuevo num de coin */
+                ];
+            case 1:
+                datosCoin = _a.sent();
+                if (!datosCoin) return [3 /*break*/, 3];
+                newCoin = typeorm_1.getRepository(Coins_1.Coins).merge(datosCoin, req.body);
+                return [4 /*yield*/, typeorm_1.getRepository(Coins_1.Coins).save(newCoin)];
+            case 2:
+                results = _a.sent();
+                return [2 /*return*/, res.json(results)];
+            case 3: return [2 /*return*/, res.json("error")];
+        }
+    });
+}); };
+exports.putCoin = putCoin;
+/* Get de los primero 5 usuarios */
+var getTop = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var top;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, typeorm_1.getRepository(Usuario_1.Usuario).find({
+                    order: {
+                        puntos: 'DESC'
+                    },
+                    skip: 0,
+                    take: 5
+                })];
+            case 1:
+                top = _a.sent();
+                return [2 /*return*/, res.json(top)];
+        }
+    });
+}); };
+exports.getTop = getTop;

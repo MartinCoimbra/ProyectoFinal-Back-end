@@ -39,6 +39,11 @@ router.get('/respuestas',verifyToken, safe(actions.getRespuestas));
 
 // Editar los datos del usuario //
 router.put('/editardatos',verifyToken, safe(actions.putDatos));
-
+/* GET de los coin de este mismo user */
+router.get('/coin',verifyToken, safe(actions.getCoin))
+/* Posteamos Coins por defaul */
+router.post('/postCoin',verifyToken, safe(actions.postCoin))
+/* Ruta put para paypal y cuando gaste los con para aumentar o restar */
+router.put('/coin',verifyToken, safe(actions.putCoin));
 
 export default router;

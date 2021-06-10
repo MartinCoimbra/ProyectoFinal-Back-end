@@ -18,6 +18,8 @@ router.get('/preguntadoE/:id', safe(actions.getPreguntado));
 router.get('/preguntados/categoria/:id', safe(actions.getPreguntadosPorCategoria));
 /* Metodo get TODOS los comentrios que pertenescan a una tematica ✅ */
 router.get('/preguntado/:id/comentario', safe(actions.getComentariosDeUnPreguntado));
+/* Get del top!!! */
+router.get('/top', safe(actions.getTop));
 
 
 export default router;
