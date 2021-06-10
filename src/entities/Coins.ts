@@ -10,10 +10,8 @@ export class Coins extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number;
      
-    @Column()
+    @Column({default:100})
     coins: number;
-
-
 
     @OneToOne(() => Usuario, usuario => usuario.coins)
     @JoinColumn()

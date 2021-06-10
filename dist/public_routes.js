@@ -39,4 +39,6 @@ router.get('/preguntadoE/:id', utils_1.safe(actions.getPreguntado));
 router.get('/preguntados/categoria/:id', utils_1.safe(actions.getPreguntadosPorCategoria));
 /* Metodo get TODOS los comentrios que pertenescan a una tematica ✅ */
 router.get('/preguntado/:id/comentario', utils_1.safe(actions.getComentariosDeUnPreguntado));
+/* Get del top!!! */
+router.get('/top', utils_1.safe(actions.getTop));
 exports["default"] = router;

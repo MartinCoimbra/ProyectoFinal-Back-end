@@ -10,6 +10,7 @@ import { Preguntas } from './entities/Preguntas'
 import { Respuesta } from './entities/Respuesta'
 import { findSourceMap } from 'module'
 import { Comentario } from './entities/Comentario'
+import { Coins } from './entities/Coins'
 
 /* POST user ✅*/
 export const createUser = async (req: Request, res: Response): Promise<Response> => {
@@ -26,6 +27,7 @@ export const createUser = async (req: Request, res: Response): Promise<Response>
     if (user) throw new Exception("ya hay un usuario con este email")
     const newUser = getRepository(Usuario).create(req.body)
     const results = await getRepository(Usuario).save(newUser)
+
     return res.json(results);
 }
 /* GET user ✅*/
@@ -256,8 +258,10 @@ export const getRespuestas = async (req: Request, res: Response): Promise<Respon
 // Si acerto la pregunta se le sumaran puntos de lo contrario se le restaran // 
 export const getPreguntas_Respuestas_Preguntado = async (req: Request, res: Response): Promise<Response> => {
     const pregunta = await getRepository(Preguntas).find(
-        { where: { preguntados: req.params.id }, 
-        relations: ['respuesta', 'preguntado'] })
+        {
+            where: { preguntados: req.params.id },
+            relations: ['respuesta', 'preguntado']
+        })
     return res.json(pregunta);
 }
 
@@ -283,27 +287,72 @@ export const postComentario = async (req: Request, res: Response): Promise<Respo
 /*  GET A TODOS LOS COMENTARIOS de 1 preguntado /preguntado/:id/comentario ✅*/
 export const getComentariosDeUnPreguntado = async (req: Request, res: Response): Promise<Response> => {
     const comentarios = await getRepository(Comentario).find(
-        { where: { preguntados: parseInt(req.params.id) },
-        relations: ['preguntado', 'usuario']  })
+        {
+            where: { preguntados: parseInt(req.params.id) },
+            relations: ['preguntado', 'usuario']
+        })
     return res.json(comentarios);
 }
 /*  GET A todos los preguntados perteneciente a una categoria✅ */
 export const getPreguntadosPorCategoria = async (req: Request, res: Response): Promise<Response> => {
-      const preguntado = await getRepository(Preguntado).find({
+    const preguntado = await getRepository(Preguntado).find({
         where: { categoria: req.params.id },
         relations: ['categoria']
     });
     return res.json(preguntado);
 }
-
 /* PUT (UPDATE) datos */
-export const putDatos = async (req: Request, res: Response): Promise<Response> =>{
-    const userID = (req.user as ObjectLiteral).user    
+export const putDatos = async (req: Request, res: Response): Promise<Response> => {
+    const userID = (req.user as ObjectLiteral).user
     const dato = await getRepository(Usuario).findOne(userID);
-        if(dato){
-            const newdatos = getRepository(Usuario).merge(dato, req.body); 
-            const results = await getRepository(Usuario).save(newdatos)
-            return res.json(results);
-        }
-        return res.json({msg: "Error 504"})
+    if (dato) {
+        const newdatos = getRepository(Usuario).merge(dato, req.body);
+        const results = await getRepository(Usuario).save(newdatos)
+        return res.json(results);
+    }
+    return res.json({ msg: "Error 504" })
+}
+
+export const postCoin = async (req: Request, res: Response): Promise<Response> => {
+    const userID = (req.user as ObjectLiteral).user.id
+    let coin = new Coins()
+    coin.usuario = userID
+    const coinuser = getRepository(Coins).create(coin)
+    const resultsCoin = await getRepository(Coins).save(coinuser)
+    return res.json(resultsCoin)
+}
+/* GET coin del user logiado */
+export const getCoin = async (req: Request, res: Response): Promise<Response> => {
+    const userID = (req.user as ObjectLiteral).user.id
+    const datosCoin = await getRepository(Coins).find({
+        where: { usuario: userID },
+        relations: ['usuario']
+    })
+    return res.json(datosCoin)
+}
+/* GET coin del user logiado */
+export const putCoin = async (req: Request, res: Response): Promise<Response> => {
+    if (!req.body.coins) throw new Exception("No hay coin para editar ( coins )")
+    const userID = (req.user as ObjectLiteral).user.id
+    const datosCoin = await getRepository(Coins).findOne({ where: { usuario: userID } })
+
+    /* por el body tomaremos el nuevo num de coin */
+    if (datosCoin) {
+        const newCoin = getRepository(Coins).merge(datosCoin, req.body);
+        const results = await getRepository(Coins).save(newCoin)
+        return res.json(results);
+    }
+    return res.json("error")
+}
+
+/* Get de los primero 5 usuarios */
+export const getTop = async (req: Request, res: Response): Promise<Response> => {
+    const top = await getRepository(Usuario).find({
+        order: {
+            puntos: 'DESC'
+        },
+        skip: 0,
+        take: 5
+    })
+    return res.json(top)
 }

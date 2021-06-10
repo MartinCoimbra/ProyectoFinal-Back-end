@@ -37,7 +37,7 @@ var Coins = /** @class */ (function (_super) {
         __metadata("design:type", Number)
     ], Coins.prototype, "id");
     __decorate([
-        typeorm_1.Column(),
+        typeorm_1.Column({ "default": 100 }),
         __metadata("design:type", Number)
     ], Coins.prototype, "coins");
     __decorate([
